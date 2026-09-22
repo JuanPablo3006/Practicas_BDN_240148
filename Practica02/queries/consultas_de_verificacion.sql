@@ -8,3 +8,11 @@ SELECT
     TO_HOST AS Host_Usuario
 FROM mysql.role_edges
 ORDER BY FROM_USER, TO_USER;
+
+/*6.Verificar que los usuarios remotos hayan sido creados*/
+SELECT User, Host FROM mysql.user WHERE Host = '%' AND account_locked = 'N';
+
+/*7. Verificar los roles que fueron creados */
+SELECT User, Host FROM mysql.user WHERE Host = '%' AND account_locked = 'Y';
+
+/*8. Verificar que usuarios tienen que roles */
