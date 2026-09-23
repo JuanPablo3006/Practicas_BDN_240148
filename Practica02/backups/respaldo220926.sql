@@ -1,10 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `db_test` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `db_test`;
--- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.42, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: db_test
 -- ------------------------------------------------------
--- Server version	8.0.36
+-- Server version	9.3.0
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -33,7 +33,7 @@ CREATE TABLE `tb_logs` (
   `operation_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `operation_status` bit(1) DEFAULT b'1',
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,7 +42,7 @@ CREATE TABLE `tb_logs` (
 
 LOCK TABLES `tb_logs` WRITE;
 /*!40000 ALTER TABLE `tb_logs` DISABLE KEYS */;
-INSERT INTO `tb_logs` VALUES (1,'tb_users','Create','root@localhost','Usuario creado. ID=1, email=saulito.barrios@utxicotepec.edu.mx, nickname=Saul','2026-09-08 11:11:03',_binary ''),(2,'tb_users','Create','root@localhost','Usuario creado. ID=2, email=adriancito@gmail.com, nickname=Adrian','2026-09-08 11:12:14',_binary ''),(3,'tb_users','Create','root@localhost','Usuario creado. ID=3, email=carlitosmor@gmail.com, nickname=CarlosR','2026-09-08 11:12:55',_binary ''),(4,'tb_users','Create','adrian.rios@PC-10','Usuario creado. ID=4, email=patricia.medina@gmail.com, nickname=pato24','2026-09-15 11:16:45',_binary ''),(5,'tb_users','Create','adrian.rios@PC-10','Usuario creado. ID=5, email=natalia.carrasco@gmail.com, nickname=nat2401','2026-09-15 11:22:24',_binary ''),(6,'tb_products','Create','root@localhost','Producto creado. ID=1, SKU=COMP-001, Nombre=Laptop HP Pavilion 15, Precio=12999.00, Stock=10','2026-09-21 22:55:47',_binary ''),(7,'tb_products','Create','root@localhost','Producto creado. ID=2, SKU=TEL-001, Nombre=Samsung Galaxy S23 Ultra, Precio=19999.00, Stock=8','2026-09-21 22:57:17',_binary '');
+INSERT INTO `tb_logs` VALUES (1,'tb_users','Create','root@localhost','Usuario creado. ID=1, email=saulito.barrios@utxicotepec.edu.mx, nickname=Saul','2026-09-08 11:11:03',_binary ''),(2,'tb_users','Create','root@localhost','Usuario creado. ID=2, email=adriancito@gmail.com, nickname=Adrian','2026-09-08 11:12:14',_binary ''),(3,'tb_users','Create','root@localhost','Usuario creado. ID=3, email=carlitosmor@gmail.com, nickname=CarlosR','2026-09-08 11:12:55',_binary ''),(4,'tb_users','Create','adrian.rios@PC-10','Usuario creado. ID=4, email=patricia.medina@gmail.com, nickname=pato24','2026-09-15 11:16:45',_binary ''),(5,'tb_users','Create','adrian.rios@PC-10','Usuario creado. ID=5, email=natalia.carrasco@gmail.com, nickname=nat2401','2026-09-15 11:22:24',_binary ''),(6,'tb_products','Create','root@localhost','Producto creado. ID=1, SKU=COMP-001, Nombre=Laptop HP Pavilion 15, Precio=12999.00, Stock=10','2026-09-21 22:55:47',_binary ''),(7,'tb_products','Create','root@localhost','Producto creado. ID=2, SKU=TEL-001, Nombre=Samsung Galaxy S23 Ultra, Precio=19999.00, Stock=8','2026-09-21 22:57:17',_binary ''),(8,'tb_products','Create','carlos.rene@CARLOSR','Producto creado. ID=3, SKU=LAP-002, Nombre=MacBook Air M2 13 pulgadas, Precio=22499.00, Stock=5','2026-09-23 12:18:30',_binary ''),(9,'tb_products','Create','carlos.rene@CARLOSR','Producto creado. ID=4, SKU=AUD-003, Nombre=Sony WH-1000XM5, Precio=6899.50, Stock=12','2026-09-23 12:18:30',_binary ''),(10,'tb_products','Create','carlos.rene@CARLOSR','Producto creado. ID=5, SKU=REJ-004, Nombre=Apple Watch Series 9 GPS 45mm, Precio=8999.00, Stock=10','2026-09-23 12:18:30',_binary ''),(11,'tb_products','Create','carlos.rene@CARLOSR','Producto creado. ID=6, SKU=CON-005, Nombre=PlayStation 5 Edición Digital, Precio=10499.00, Stock=6','2026-09-23 12:18:30',_binary ''),(12,'tb_products','Create','carlos.rene@CARLOSR','Producto creado. ID=7, SKU=CAM-006, Nombre=Canon EOS R100 con Lente 18-45mm, Precio=12999.00, Stock=4','2026-09-23 12:18:30',_binary '');
 /*!40000 ALTER TABLE `tb_logs` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -65,7 +65,7 @@ CREATE TABLE `tb_products` (
   `last_update` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`ID`),
   UNIQUE KEY `SKU` (`SKU`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -74,7 +74,7 @@ CREATE TABLE `tb_products` (
 
 LOCK TABLES `tb_products` WRITE;
 /*!40000 ALTER TABLE `tb_products` DISABLE KEYS */;
-INSERT INTO `tb_products` VALUES (1,'COMP-001','Laptop HP Pavilion 15','Procesador Intel Core i5, 16GB RAM, 512GB SSD, pantalla de 15.6 pulgadas Full HD.',12999.00,10,_binary '','2026-09-21 22:55:47','2026-09-21 22:55:47'),(2,'TEL-001','Samsung Galaxy S23 Ultra','Pantalla 6.8 Dynamic AMOLED 2X, 256GB almacenamiento, 12GB RAM, cámara 200MP y S-Pen incluido.',19999.00,8,_binary '','2026-09-21 22:57:17','2026-09-21 22:57:17');
+INSERT INTO `tb_products` VALUES (1,'COMP-001','Laptop HP Pavilion 15','Procesador Intel Core i5, 16GB RAM, 512GB SSD, pantalla de 15.6 pulgadas Full HD.',12999.00,10,_binary '','2026-09-21 22:55:47','2026-09-21 22:55:47'),(2,'TEL-001','Samsung Galaxy S23 Ultra','Pantalla 6.8 Dynamic AMOLED 2X, 256GB almacenamiento, 12GB RAM, cámara 200MP y S-Pen incluido.',19999.00,8,_binary '','2026-09-21 22:57:17','2026-09-21 22:57:17'),(3,'LAP-002','MacBook Air M2 13 pulgadas','Procesador Apple M2 de 8 núcleos, 8GB de memoria unificada, 256GB SSD, pantalla Liquid Retina y diseño ultra delgado.',22499.00,5,_binary '','2026-09-23 12:18:30','2026-09-23 12:18:30'),(4,'AUD-003','Sony WH-1000XM5','Audífonos inalámbricos Over-Ear con cancelación de ruido de alta precisión, hasta 30 horas de batería y micrófono integrado.',6899.50,12,_binary '','2026-09-23 12:18:30','2026-09-23 12:18:30'),(5,'REJ-004','Apple Watch Series 9 GPS 45mm','Caja de aluminio en color medianoche, correa deportiva, sensor de oxígeno en sangre, ECG y pantalla Retina siempre activa.',8999.00,10,_binary '','2026-09-23 12:18:30','2026-09-23 12:18:30'),(6,'CON-005','PlayStation 5 Edición Digital','Consola con unidad SSD de alta velocidad de 825GB, soporte para resolución 4K a 120Hz, HDR y control inalámbrico DualSense.',10499.00,6,_binary '','2026-09-23 12:18:30','2026-09-23 12:18:30'),(7,'CAM-006','Canon EOS R100 con Lente 18-45mm','Cámara mirrorless de 24.1 MP, sensor CMOS APS-C, grabación de video en 4K y conectividad Wi-Fi y Bluetooth.',12999.00,4,_binary '','2026-09-23 12:18:30','2026-09-23 12:18:30');
 /*!40000 ALTER TABLE `tb_products` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -301,4 +301,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-09-22 11:34:03
+-- Dump completed on 2026-09-23 14:23:56
