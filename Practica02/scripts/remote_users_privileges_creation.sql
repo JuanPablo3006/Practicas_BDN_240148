@@ -40,14 +40,14 @@ GRANT 'superadmin' TO 'pablo.reyes'@'%';
 GRANT 'admin' TO 'marco.ramirez'@'%';
 GRANT 'support' TO 'adrian.rios'@'%';
 GRANT 'seller' TO 'carlos.rene'@'%';
-GRANT 'seller' TO 'uriel.perez'@'%';
+GRANT 'seller' TO 'luis.cazarez'@'%';
 
 /* Esto permite que el rol se active automaticamente cuando el usuario inicia sesion */
 SET DEFAULT ROLE 'superadmin' TO 'pablo.reyes'@'%';
 SET DEFAULT ROLE 'admin' TO 'marco.ramirez'@'%';
 SET DEFAULT ROLE 'support' TO 'adrian.rios'@'%';
 SET DEFAULT ROLE 'seller' TO 'carlos.rene'@'%';
-SET DEFAULT ROLE 'seller' TO 'uriel.perez'@'%';
+SET DEFAULT ROLE 'seller' TO 'luis.cazarez'@'%';
 
 -- 7. REFRESCAR PRIVILEGIOS Y MENSAJE DE CONFIRMACION
 FLUSH PRIVILEGES;

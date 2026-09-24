@@ -26,6 +26,12 @@ WHERE b.operation = 'Create'
 GROUP BY u.nickname, u.email, b.db_user, b.description, b.operation_date
 ORDER BY b.operation_date asc;
 
+/*4. Cuantos registros existen en la tabla bitacora) */
+SELECT COUNT(*) AS total_registros FROM tb_logs;
+
+/*5. Consultar todas las operaciones realizadas en la base de datos*/
+SELECT * FROM tb_logs;
+
 /*6.Verificar que los usuarios remotos hayan sido creados*/
 SELECT User, Host FROM mysql.user WHERE Host = '%' AND account_locked = 'N';
 
@@ -33,3 +39,8 @@ SELECT User, Host FROM mysql.user WHERE Host = '%' AND account_locked = 'N';
 SELECT User, Host FROM mysql.user WHERE Host = '%' AND account_locked = 'Y';
 
 /*8. Verificar que usuarios tienen que roles */
+SELECT TO_USER AS usuario, TO_HOST AS host, FROM_USER AS rol, FROM_HOST AS rol_host
+FROM mysql.role_edges ORDER BY TO_USER, FROM_USER, ROL;
+
+/*9. Verificar el total de procedimientos almacenados que existen en la base de datos db_test */
+SHOW PROCEDURE STATUS WHERE Db = 'db_test';
