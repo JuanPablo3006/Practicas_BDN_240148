@@ -1,5 +1,18 @@
-/* Consultar los triggers que hay en la base de datos*/
-show triggers from db_test;
+USE db_test;
+
+/* 1. Cuantas tablas existen en la base de datos db_test_7b? */
+SHOW TABLES;
+
+/* 2. Cuanto triggers existen en la base de datos db_test_7b? */
+SHOW TRIGGERS FROM db_test;
+
+/* 3. Cuantos registros existen en la tabla users? */
+-- Total de Usuarios
+SELECT COUNT(*) AS total_registros FROM tb_users;
+-- Visualizacion de los Usarios
+SELECT * FROM tb_users;
+-- Consulta para verificar que usuario de la base de datos , 
+-- inserto a que usuario de la plataforma ecommerce, agregando el rol del SGBD */
 
 SELECT user,host FROM mysql.user WHERE host="%";
 
