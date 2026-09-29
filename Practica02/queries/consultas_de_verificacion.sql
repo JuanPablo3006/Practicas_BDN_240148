@@ -44,3 +44,16 @@ FROM mysql.role_edges ORDER BY TO_USER, FROM_USER, ROL;
 
 /*9. Verificar el total de procedimientos almacenados que existen en la base de datos db_test */
 SHOW PROCEDURE STATUS WHERE Db = 'db_test';
+
+/*10. Verificacion de Productos*/
+/*Contabilizar los productos*/
+SELECT COUNT(*) FROM tb_products;
+
+/*Visualizar todos los productos*/
+SELECT * FROM tb_products;
+
+/* Consulta para saber la trazabilidad de los productos*/
+SELECT * FROM vw_trazabilidad_productos ORDER BY operation_date DESC LIMIT 10;
+
+/*Consulta la trazabilidad de usuarios*/
+SELECT * FROM vw_trazabilidad_usuarios ORDER BY operation_date ASC;
