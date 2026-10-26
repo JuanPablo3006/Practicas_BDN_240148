@@ -1,0 +1,53 @@
+/* CREACION DE USUARIOS REMOTOS (Seguro si ya existen) */
+
+CREATE USER IF NOT EXISTS 'pablo.reyes'@'%' IDENTIFIED BY '240148';
+CREATE USER IF NOT EXISTS 'marco.ramirez'@'%' IDENTIFIED BY 'qwerty123';
+CREATE USER IF NOT EXISTS 'jonhy.neri'@'%' IDENTIFIED BY '240558';
+CREATE USER IF NOT EXISTS 'carlos.rene'@'%' IDENTIFIED BY '240221';
+CREATE USER IF NOT EXISTS 'saul.barrios'@'%' IDENTIFIED BY '240196';
+
+/* ASIGNACION DE PRIVILEGIOS DEL SUPER USUARIO CORREGIDO */
+GRANT ALL PRIVILEGES ON *.* TO 'pablo.reyes'@'%' WITH GRANT OPTION;
+
+/* CREACION DE ROLES PARA LOS USUARIOS DE LA PLATAFORMA DE ECOMMERCE */
+CREATE ROLE IF NOT EXISTS 'superadmin';
+CREATE ROLE IF NOT EXISTS 'admin';
+CREATE ROLE IF NOT EXISTS 'seller';
+CREATE ROLE IF NOT EXISTS 'buyer';
+CREATE ROLE IF NOT EXISTS 'common_user';
+CREATE ROLE IF NOT EXISTS 'user_not_registered';
+CREATE ROLE IF NOT EXISTS 'support';
+
+/* ASIGNACION DE PRIVILEGIOS A LOS ROLES DE LA PLATAFORMA ECOMMERCE */
+-- ADMIN
+/* SUPERADMIN CORREGIDO */
+GRANT ALL PRIVILEGES ON *.* TO 'superadmin';
+/* ADMIN */
+GRANT ALL PRIVILEGES ON db_test.* TO 'admin';
+/* SUPPORT */
+GRANT SELECT, INSERT, UPDATE ON db_test.tb_users TO 'support';
+GRANT SELECT, INSERT, UPDATE ON db_test.tb_products TO 'support';
+
+/* SELLER */
+GRANT SELECT, INSERT, UPDATE ON db_test.tb_products TO 'seller';
+
+
+/* ASIGNAR EL ROL AL USUARIO */
+/* Super admin*/
+GRANT 'superadmin' TO 'pablo.reyes'@'%';
+GRANT 'admin' TO 'marco.ramirez'@'%';
+GRANT 'support' TO 'saul.barrios'@'%';
+GRANT 'seller' TO 'carlos.rene'@'%';
+GRANT 'seller' TO 'jonhy.neri'@'%';
+
+/* Esto permite que el rol se active automaticamente cuando el usuario inicia sesion */
+SET DEFAULT ROLE 'superadmin' TO 'pablo.reyes'@'%';
+SET DEFAULT ROLE 'admin' TO 'marco.ramirez'@'%';
+SET DEFAULT ROLE 'support' TO 'saul.barrios'@'%';
+SET DEFAULT ROLE 'seller' TO 'carlos.rene'@'%';
+SET DEFAULT ROLE 'seller' TO 'jonhy.neri'@'%';
+
+-- 7. REFRESCAR PRIVILEGIOS Y MENSAJE DE CONFIRMACION
+FLUSH PRIVILEGES;
+
+SELECT "Los usuarios y privilegios han sido creados correctamente" AS mensaje;
