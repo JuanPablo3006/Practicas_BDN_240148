@@ -1,0 +1,42 @@
+-- 1. CREACIÓN DE ROLES OBLIGATORIOS
+CREATE ROLE superadmin WITH SUPERUSER CREATEDB CREATEROLE LOGIN;
+CREATE ROLE admin;
+CREATE ROLE seller;
+CREATE ROLE buyer;
+CREATE ROLE support;
+CREATE ROLE common;
+CREATE ROLE not_registered;
+
+-- 2. OTORGAR PERMISOS A LOS ROLES SOBRE EL ESQUEMA PUBLIC
+GRANT ALL ON SCHEMA public TO superadmin;
+GRANT ALL ON SCHEMA public TO admin;
+
+-- Permisos para SUPPORT (tb_users y tb_products)
+GRANT SELECT, INSERT, UPDATE ON TABLE tb_users TO support;
+GRANT SELECT, INSERT, UPDATE ON TABLE tb_products TO support;
+
+-- Permisos para SELLER (tb_products) -> Permite que inserten los productos
+GRANT SELECT, INSERT, UPDATE ON TABLE tb_products TO seller;
+
+
+-- 3. CREACIÓN DE USUARIOS PERSONALES CON ACCESO REMOTO (LOGIN)
+CREATE USER pablo_reyes WITH PASSWORD '240148' LOGIN;
+CREATE USER marco_ramirez WITH PASSWORD 'qwerty123' LOGIN;
+CREATE USER carlos_rene WITH PASSWORD '240221' LOGIN;
+CREATE USER uriel_perez WITH PASSWORD '240485' LOGIN;
+CREATE USER luis_cazarez WITH PASSWORD '240343' LOGIN;
+CREATE USER saul_barrios WITH PASSWORD '240196' LOGIN;
+CREATE USER johny_neri WITH PASSWORD '240558' LOGIN;
+
+
+-- 4. ASIGNACIÓN DE ROLES A LOS USUARIOS
+GRANT superadmin TO pablo_reyes;
+GRANT admin TO marco_ramirez;
+GRANT support TO saul_barrios;
+GRANT seller TO carlos_rene;
+GRANT seller TO johny_neri;
+
+
+-- 5. ASIGNAR SECUENCIAS (Importante para que 'seller' pueda insertar con AUTO_INCREMENT / SERIAL)
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO seller;
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO support;

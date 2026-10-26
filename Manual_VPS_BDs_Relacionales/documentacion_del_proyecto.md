@@ -7,21 +7,6 @@
 
 ---
 
-## Tabla de Contenidos
-
-1. [Descripción General](#-descripción-general)
-2. [Arquitectura e Infraestructura](#-arquitectura-e-infraestructura)
-3. [Mapeo de Puertos Personalizados](#-mapeo-de-puertos-personalizados)
-4. [Estructura del Repositorio](#-estructura-del-repositorio)
-5. [Guía de Despliegue Rápido](#-guía-de-despliegue-rápido)
-6. [Diseño y Modelado de la Base de Datos](#-diseño-y-modelado-de-la-base-de-datos)
-7. [Matriz de Control de Accesos y Roles (RBAC)](#-matriz-de-control-de-accesos-y-roles-rbac)
-8. [Reglas de Negocio Implementadas (Triggers & Vistas)](#-reglas-de-negocio-implementadas-triggers--vistas)
-9. [Pruebas de Funcionalidad y Auditoría](#-pruebas-de-funcionalidad-y-auditoría)
-10. [Flujo de Trabajo Git / Versionado](#-flujo-de-trabajo-git--versionado)
-
----
-
 ## Descripción General
 
 Este proyecto consiste en el diseño, provisión y despliegue automatizado de un entorno multi-motor de bases de datos relacionales (**PostgreSQL 15** y **MySQL 8.0**) utilizando la tecnología de contenedores **Docker Compose** sobre un Servidor Privado Virtual (VPS). 
