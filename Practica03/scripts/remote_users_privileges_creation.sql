@@ -7,6 +7,8 @@ CREATE USER IF NOT EXISTS 'carlos.rene'@'%' IDENTIFIED BY '240221';
 CREATE USER IF NOT EXISTS 'uriel.perez'@'%' IDENTIFIED BY '240485';
 CREATE USER IF NOT EXISTS 'luis.cazarez'@'%' IDENTIFIED BY '240343';
 CREATE USER IF NOT EXISTS 'saul.barrios'@'%' IDENTIFIED BY '240196';
+CREATE USER IF NOT EXISTS 'app_movil'@'%' IDENTIFIED BY 'Mobile890';
+CREATE USER IF NOT EXISTS 'app_web'@'%' IDENTIFIED BY 'Web123';
 
 /* ASIGNACION DE PRIVILEGIOS DEL SUPER USUARIO CORREGIDO */
 GRANT ALL PRIVILEGES ON *.* TO 'pablo.reyes'@'%' WITH GRANT OPTION;
@@ -40,6 +42,8 @@ GRANT SELECT, INSERT, UPDATE ON db_test.tb_carts TO 'buyer';
 GRANT SELECT, INSERT, UPDATE ON db_test.tbd_carts_items TO 'buyer';
 GRANT SELECT, INSERT ON db_test.tb_buyer_orders TO 'buyer';
 GRANT SELECT, INSERT, UPDATE ON db_test.tbd_users_wishlist_products TO 'buyer';
+/*COMMON_USER*/
+GRANT SELECT ON db_test.tb_products TO 'common_user';
 
 /* ASIGNAR EL ROL AL USUARIO */
 /* Super admin*/
@@ -48,6 +52,7 @@ GRANT 'admin' TO 'marco.ramirez'@'%';
 GRANT 'support' TO 'adrian.rios'@'%';
 GRANT 'seller' TO 'carlos.rene'@'%';
 GRANT 'seller' TO 'luis.cazarez'@'%';
+GRANT 'user_not_registered', 'common_user', 'buyer' TO 'app_movil'@'%', 'app_web'@'%';
 
 /* Esto permite que el rol se active automaticamente cuando el usuario inicia sesion */
 SET DEFAULT ROLE 'superadmin' TO 'pablo.reyes'@'%';
@@ -55,6 +60,7 @@ SET DEFAULT ROLE 'admin' TO 'marco.ramirez'@'%';
 SET DEFAULT ROLE 'support' TO 'adrian.rios'@'%';
 SET DEFAULT ROLE 'seller' TO 'carlos.rene'@'%';
 SET DEFAULT ROLE 'seller' TO 'luis.cazarez'@'%';
+SET DEFAULT ROLE 'user_not_registered' TO 'app_movil'@'%', 'app_web'@'%';
 
 -- 7. REFRESCAR PRIVILEGIOS Y MENSAJE DE CONFIRMACION
 FLUSH PRIVILEGES;
