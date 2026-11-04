@@ -62,11 +62,14 @@ SHOW PROCEDURE STATUS WHERE Db = 'db_test';
 /*Contabilizar los productos*/
 SELECT COUNT(*) FROM tb_products;
 
-/*Visualizar todos los productos*/
+/*11. Visualizar todos los productos*/
 SELECT * FROM tb_products;
 
-/* Consulta para saber la trazabilidad de los productos*/
+/*12.  Consulta para saber la trazabilidad de los productos*/
 SELECT * FROM vw_trazabilidad_productos ORDER BY operation_date DESC LIMIT 10;
 
-/*Consulta la trazabilidad de usuarios*/
+/*13. Consulta la trazabilidad de usuarios*/
+SELECT * FROM vw_trazabilidad_usuarios ORDER BY operation_date ASC;
+
+/*14. Consulta la trazabilidad de usuarios */
 SELECT * FROM vw_trazabilidad_usuarios ORDER BY operation_date ASC;
