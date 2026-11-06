@@ -4,13 +4,13 @@
   "meta": {
     "title": "MERE — db_test · Práctica 03",
     "locale": "es",
-    "output": ".archify/erd-db-test-practica03-20261103/mere.html",
+    "output": "Practica03/.archify/erd-db-test-practica03-20261103/mere.html",
     "quality_profile": "standard",
     "repository": {
       "url": "https://github.com/JuanPablo3006/Practicas_BDN_240148.git",
       "provider": "github",
       "link_mode": "web",
-      "revision": "17170e4778caa269713434317dc8a3dbc3e5df40"
+      "revision": "8e1c87ba7b86714e31fb6970c251b07e264b5509"
     },
     "subtitle": "26 tablas · claves, relaciones y columnas físicas · fuente: respaldo031126.sql"
   },
@@ -31,7 +31,8 @@
         {
           "name": "ID",
           "type": "int unsigned",
-          "key": "pk"
+          "key": "pk",
+          "description": "Clave primaria. Identificador asignado automáticamente por la base de datos."
         },
         {
           "name": "user_ID",
@@ -40,19 +41,23 @@
             "uk",
             "fk"
           ],
-          "references": "tb_users.ID"
+          "references": "tb_users.ID",
+          "description": "Referencia foránea a tb_users.ID. Participa en una restricción única."
         },
         {
           "name": "status",
-          "type": "bit(1)"
+          "type": "bit(1)",
+          "description": "Dato status de tb_carts."
         },
         {
           "name": "creation_date",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
         },
         {
           "name": "last_update",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo de última actualización automática."
         }
       ],
       "sources": [
@@ -77,7 +82,8 @@
             "fk",
             "pk"
           ],
-          "references": "tb_carts.ID"
+          "references": "tb_carts.ID",
+          "description": "Clave primaria. Referencia foránea a tb_carts.ID."
         },
         {
           "name": "provider_ID",
@@ -86,7 +92,8 @@
             "fk",
             "pk"
           ],
-          "references": "tbd_products_users_providers.user_id"
+          "references": "tbd_products_users_providers.user_id",
+          "description": "Clave primaria. Referencia foránea a tbd_products_users_providers.user_id."
         },
         {
           "name": "product_ID",
@@ -95,15 +102,18 @@
             "fk",
             "pk"
           ],
-          "references": "tbd_products_users_providers.product_id"
+          "references": "tbd_products_users_providers.product_id",
+          "description": "Clave primaria. Referencia foránea a tbd_products_users_providers.product_id."
         },
         {
           "name": "quantity",
-          "type": "int unsigned"
+          "type": "int unsigned",
+          "description": "Dato quantity de tbd_cart_items."
         },
         {
           "name": "creation_date",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
         }
       ],
       "sources": [
@@ -128,7 +138,8 @@
             "fk",
             "pk"
           ],
-          "references": "tb_users.ID"
+          "references": "tb_users.ID",
+          "description": "Clave primaria. Referencia foránea a tb_users.ID."
         },
         {
           "name": "product_ID",
@@ -137,19 +148,23 @@
             "fk",
             "pk"
           ],
-          "references": "tb_products.ID"
+          "references": "tb_products.ID",
+          "description": "Clave primaria. Referencia foránea a tb_products.ID."
         },
         {
           "name": "status",
-          "type": "bit(1)"
+          "type": "bit(1)",
+          "description": "Dato status de tbd_users_wishlist_products."
         },
         {
           "name": "creation_date",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
         },
         {
           "name": "last_update",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
         }
       ],
       "sources": [
@@ -170,31 +185,38 @@
         {
           "name": "ID",
           "type": "int",
-          "key": "pk"
+          "key": "pk",
+          "description": "Clave primaria. Identificador asignado automáticamente por la base de datos."
         },
         {
           "name": "table_name",
-          "type": "varchar(100)"
+          "type": "varchar(100)",
+          "description": "Dato table name de tb_logs."
         },
         {
           "name": "operation",
-          "type": "enum"
+          "type": "enum",
+          "description": "Valor lógico restringido a: Create, Read, Update, Delete."
         },
         {
           "name": "db_users",
-          "type": "varchar(80)"
+          "type": "varchar(80)",
+          "description": "Dato db users de tb_logs."
         },
         {
           "name": "description",
-          "type": "text"
+          "type": "text",
+          "description": "Dato description de tb_logs."
         },
         {
           "name": "operation_date",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
         },
         {
           "name": "operation_status",
-          "type": "bit(1)"
+          "type": "bit(1)",
+          "description": "Dato operation status de tb_logs."
         }
       ],
       "sources": [
@@ -215,65 +237,79 @@
         {
           "name": "ID",
           "type": "int unsigned",
-          "key": "pk"
+          "key": "pk",
+          "description": "Clave primaria. Identificador asignado automáticamente por la base de datos."
         },
         {
           "name": "order_ID",
           "type": "int unsigned",
           "key": "fk",
-          "references": "tb_orders.ID"
+          "references": "tb_orders.ID",
+          "description": "Referencia foránea a tb_orders.ID."
         },
         {
           "name": "buyer_order_ID",
           "type": "int unsigned",
           "key": "fk",
-          "references": "tbd_buyer_orders.ID"
+          "references": "tbd_buyer_orders.ID",
+          "description": "Referencia foránea a tbd_buyer_orders.ID."
         },
         {
           "name": "requested_by_user_ID",
           "type": "int unsigned",
           "key": "fk",
-          "references": "tb_users.ID"
+          "references": "tb_users.ID",
+          "description": "Referencia foránea a tb_users.ID."
         },
         {
           "name": "cancellation_scope",
-          "type": "enum"
+          "type": "enum",
+          "description": "Valor lógico restringido a: WholeOrder, SellerOrder, Items."
         },
         {
           "name": "reason_code",
-          "type": "varchar(60)"
+          "type": "varchar(60)",
+          "description": "Dato reason code de tb_order_cancellations."
         },
         {
           "name": "reason_detail",
-          "type": "varchar(1000)"
+          "type": "varchar(1000)",
+          "description": "Dato reason detail de tb_order_cancellations."
         },
         {
           "name": "cancellation_status",
-          "type": "enum"
+          "type": "enum",
+          "description": "Valor lógico restringido a: Requested, Approved, Rejected, Completed."
         },
         {
           "name": "requested_at",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
         },
         {
           "name": "reviewed_at",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo/fecha del evento indicado por el nombre del campo."
         },
         {
           "name": "completed_at",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo/fecha del evento indicado por el nombre del campo."
         },
         {
           "name": "internal_notes",
-          "type": "varchar(1000)"
+          "type": "varchar(1000)",
+          "description": "Dato internal notes de tb_order_cancellations."
         },
         {
           "name": "creation_date",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
         },
         {
           "name": "last_update",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo de última actualización automática."
         }
       ],
       "sources": [
@@ -294,41 +330,50 @@
         {
           "name": "ID",
           "type": "int unsigned",
-          "key": "pk"
+          "key": "pk",
+          "description": "Clave primaria. Identificador asignado automáticamente por la base de datos."
         },
         {
           "name": "key",
-          "type": "varchar(40)"
+          "type": "varchar(40)",
+          "description": "Dato key de tb_orders."
         },
         {
           "name": "User_ID",
           "type": "int unsigned",
           "key": "fk",
-          "references": "tb_users.ID"
+          "references": "tb_users.ID",
+          "description": "Referencia foránea a tb_users.ID."
         },
         {
           "name": "total_products",
-          "type": "int"
+          "type": "int",
+          "description": "Dato total products de tb_orders."
         },
         {
           "name": "total_cost",
-          "type": "decimal(10,3)"
+          "type": "decimal(10,3)",
+          "description": "Dato total cost de tb_orders."
         },
         {
           "name": "status_string",
-          "type": "enum"
+          "type": "enum",
+          "description": "Valor lógico restringido a: Registered, Payed, Canceled, Delivered, Devolved, Attended, Sended."
         },
         {
           "name": "status",
-          "type": "bit(1)"
+          "type": "bit(1)",
+          "description": "Dato status de tb_orders."
         },
         {
           "name": "creation_date",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
         },
         {
           "name": "last_update",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo de última actualización."
         }
       ],
       "sources": [
@@ -349,37 +394,45 @@
         {
           "name": "ID",
           "type": "int unsigned",
-          "key": "pk"
+          "key": "pk",
+          "description": "Clave primaria. Identificador asignado automáticamente por la base de datos."
         },
         {
           "name": "seller_ID",
           "type": "int unsigned",
           "key": "fk",
-          "references": "tb_users.ID"
+          "references": "tb_users.ID",
+          "description": "Referencia foránea a tb_users.ID."
         },
         {
           "name": "subtotal",
-          "type": "decimal(12,2)"
+          "type": "decimal(12,2)",
+          "description": "Dato subtotal de tbd_buyer_orders."
         },
         {
           "name": "shipping_cost",
-          "type": "decimal(12,2)"
+          "type": "decimal(12,2)",
+          "description": "Dato shipping cost de tbd_buyer_orders."
         },
         {
           "name": "fulfillment_status",
-          "type": "enum"
+          "type": "enum",
+          "description": "Valor lógico restringido a: Pending, Accepted, Preparing, Sent, Delivered, Canceled, Returned."
         },
         {
           "name": "status",
-          "type": "bit(1)"
+          "type": "bit(1)",
+          "description": "Dato status de tbd_buyer_orders."
         },
         {
           "name": "creation_date",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
         },
         {
           "name": "last_update",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo de última actualización automática."
         }
       ],
       "sources": [
@@ -400,7 +453,8 @@
         {
           "name": "ID",
           "type": "int unsigned",
-          "key": "pk"
+          "key": "pk",
+          "description": "Clave primaria. Identificador asignado automáticamente por la base de datos."
         },
         {
           "name": "cancellation_ID",
@@ -409,7 +463,8 @@
             "uk",
             "fk"
           ],
-          "references": "tb_order_cancellations.ID"
+          "references": "tb_order_cancellations.ID",
+          "description": "Referencia foránea a tb_order_cancellations.ID. Participa en una restricción única."
         },
         {
           "name": "order_item_ID",
@@ -418,15 +473,18 @@
             "uk",
             "fk"
           ],
-          "references": "tbd_order_items.ID"
+          "references": "tbd_order_items.ID",
+          "description": "Referencia foránea a tbd_order_items.ID. Participa en una restricción única."
         },
         {
           "name": "quantity",
-          "type": "int unsigned"
+          "type": "int unsigned",
+          "description": "Dato quantity de tbd_cancellation_items."
         },
         {
           "name": "creation_date",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
         }
       ],
       "sources": [
@@ -447,45 +505,54 @@
         {
           "name": "ID",
           "type": "int unsigned",
-          "key": "pk"
+          "key": "pk",
+          "description": "Clave primaria. Identificador asignado automáticamente por la base de datos."
         },
         {
           "name": "buyer_order_ID",
           "type": "int unsigned",
           "key": "fk",
-          "references": "tbd_buyer_orders.ID"
+          "references": "tbd_buyer_orders.ID",
+          "description": "Referencia foránea a tbd_buyer_orders.ID."
         },
         {
           "name": "product_ID",
           "type": "int unsigned",
           "key": "fk",
-          "references": "tbd_products_users_providers.product_id"
+          "references": "tbd_products_users_providers.product_id",
+          "description": "Referencia foránea a tbd_products_users_providers.product_id."
         },
         {
           "name": "provider_ID",
           "type": "int unsigned",
           "key": "fk",
-          "references": "tbd_products_users_providers.user_id"
+          "references": "tbd_products_users_providers.user_id",
+          "description": "Referencia foránea a tbd_products_users_providers.user_id."
         },
         {
           "name": "product_name",
-          "type": "varchar(255)"
+          "type": "varchar(255)",
+          "description": "Dato product name de tbd_order_items."
         },
         {
           "name": "quantity",
-          "type": "int unsigned"
+          "type": "int unsigned",
+          "description": "Dato quantity de tbd_order_items."
         },
         {
           "name": "unit_price",
-          "type": "decimal(12,2)"
+          "type": "decimal(12,2)",
+          "description": "Dato unit price de tbd_order_items."
         },
         {
           "name": "subtotal",
-          "type": "decimal(12,2)"
+          "type": "decimal(12,2)",
+          "description": "Campo generado por la expresión declarada en el DDL."
         },
         {
           "name": "creation_date",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
         }
       ],
       "sources": [
@@ -506,28 +573,34 @@
         {
           "name": "ID",
           "type": "int unsigned",
-          "key": "pk"
+          "key": "pk",
+          "description": "Clave primaria. Identificador asignado automáticamente por la base de datos."
         },
         {
           "name": "name",
           "type": "varchar(60)",
-          "key": "uk"
+          "key": "uk",
+          "description": "Participa en una restricción única."
         },
         {
           "name": "description",
-          "type": "varchar(255)"
+          "type": "varchar(255)",
+          "description": "Dato description de tb_payment_methods."
         },
         {
           "name": "status",
-          "type": "bit(1)"
+          "type": "bit(1)",
+          "description": "Dato status de tb_payment_methods."
         },
         {
           "name": "creation_date",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
         },
         {
           "name": "last_update",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo de última actualización automática."
         }
       ],
       "sources": [
@@ -548,7 +621,8 @@
         {
           "name": "ID",
           "type": "int unsigned",
-          "key": "pk"
+          "key": "pk",
+          "description": "Clave primaria. Identificador asignado automáticamente por la base de datos."
         },
         {
           "name": "payment_ID",
@@ -557,29 +631,35 @@
             "fk",
             "fk"
           ],
-          "references": "tb_payments.ID"
+          "references": "tb_payments.ID",
+          "description": "Referencia foránea a tb_payments.ID. Referencia foránea a tb_refunds.payment_ID."
         },
         {
           "name": "refund_ID",
           "type": "int unsigned",
           "key": "fk",
-          "references": "tb_refunds.ID"
+          "references": "tb_refunds.ID",
+          "description": "Referencia foránea a tb_refunds.ID."
         },
         {
           "name": "transaction_type",
-          "type": "enum"
+          "type": "enum",
+          "description": "Valor lógico restringido a: Authorization, Capture, Charge, Void, Refund, Chargeback, Adjustment."
         },
         {
           "name": "transaction_status",
-          "type": "enum"
+          "type": "enum",
+          "description": "Valor lógico restringido a: Pending, Succeeded, Failed."
         },
         {
           "name": "amount",
-          "type": "decimal(10,2)"
+          "type": "decimal(10,2)",
+          "description": "Dato amount de tb_payment_transaction."
         },
         {
           "name": "currency",
-          "type": "char(3)"
+          "type": "char(3)",
+          "description": "Dato currency de tb_payment_transaction."
         },
         {
           "name": "provider",
@@ -587,41 +667,50 @@
           "key": [
             "uk",
             "uk"
-          ]
+          ],
+          "description": "Participa en una restricción única."
         },
         {
           "name": "provider_transaction_id",
           "type": "varchar(150)",
-          "key": "uk"
+          "key": "uk",
+          "description": "Participa en una restricción única."
         },
         {
           "name": "idempotency_key",
           "type": "varchar(100)",
-          "key": "uk"
+          "key": "uk",
+          "description": "Participa en una restricción única."
         },
         {
           "name": "response_code",
-          "type": "varchar(100)"
+          "type": "varchar(100)",
+          "description": "Dato response code de tb_payment_transaction."
         },
         {
           "name": "response_message",
-          "type": "varchar(500)"
+          "type": "varchar(500)",
+          "description": "Dato response message de tb_payment_transaction."
         },
         {
           "name": "request_date",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
         },
         {
           "name": "response_date",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo/fecha del evento indicado por el nombre del campo."
         },
         {
           "name": "creation_date",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
         },
         {
           "name": "last_update",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo de última actualización automática."
         }
       ],
       "sources": [
@@ -642,53 +731,64 @@
         {
           "name": "ID",
           "type": "int unsigned",
-          "key": "pk"
+          "key": "pk",
+          "description": "Clave primaria. Identificador asignado automáticamente por la base de datos."
         },
         {
           "name": "order_ID",
           "type": "int unsigned",
           "key": "fk",
-          "references": "tb_orders.ID"
+          "references": "tb_orders.ID",
+          "description": "Referencia foránea a tb_orders.ID."
         },
         {
           "name": "payment_method_ID",
           "type": "int unsigned",
           "key": "fk",
-          "references": "tb_payment_methods.ID"
+          "references": "tb_payment_methods.ID",
+          "description": "Referencia foránea a tb_payment_methods.ID."
         },
         {
           "name": "amount",
-          "type": "decimal(10,2)"
+          "type": "decimal(10,2)",
+          "description": "Dato amount de tb_payments."
         },
         {
           "name": "currency",
-          "type": "char(3)"
+          "type": "char(3)",
+          "description": "Dato currency de tb_payments."
         },
         {
           "name": "payment_status",
-          "type": "enum"
+          "type": "enum",
+          "description": "Valor lógico restringido a: Pending, Authorized, Paid, Failed, Refunded, PartiallyRefunded."
         },
         {
           "name": "provider",
           "type": "varchar(60)",
-          "key": "uk"
+          "key": "uk",
+          "description": "Participa en una restricción única."
         },
         {
           "name": "provider_reference",
           "type": "varchar(150)",
-          "key": "uk"
+          "key": "uk",
+          "description": "Participa en una restricción única."
         },
         {
           "name": "creation_date",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
         },
         {
           "name": "paid_date",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo/fecha del evento indicado por el nombre del campo."
         },
         {
           "name": "last_update",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo de última actualización automática."
         }
       ],
       "sources": [
@@ -709,28 +809,34 @@
         {
           "name": "ID",
           "type": "int unsigned",
-          "key": "pk"
+          "key": "pk",
+          "description": "Clave primaria. Identificador asignado automáticamente por la base de datos."
         },
         {
           "name": "code",
           "type": "varchar(30)",
-          "key": "uk"
+          "key": "uk",
+          "description": "Participa en una restricción única."
         },
         {
           "name": "description",
-          "type": "text"
+          "type": "text",
+          "description": "Dato description de tbc_payment_methods_types."
         },
         {
           "name": "status",
-          "type": "bit(1)"
+          "type": "bit(1)",
+          "description": "Dato status de tbc_payment_methods_types."
         },
         {
           "name": "creation_date",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
         },
         {
           "name": "last_update",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo de última actualización automática."
         }
       ],
       "sources": [
@@ -751,53 +857,64 @@
         {
           "name": "ID",
           "type": "bigint unsigned",
-          "key": "pk"
+          "key": "pk",
+          "description": "Clave primaria. Identificador asignado automáticamente por la base de datos."
         },
         {
           "name": "user_ID",
           "type": "int unsigned",
           "key": "fk",
-          "references": "tb_users.ID"
+          "references": "tb_users.ID",
+          "description": "Referencia foránea a tb_users.ID."
         },
         {
           "name": "payment_method_type_ID",
           "type": "int unsigned",
           "key": "fk",
-          "references": "tbc_payment_methods_types.ID"
+          "references": "tbc_payment_methods_types.ID",
+          "description": "Referencia foránea a tbc_payment_methods_types.ID."
         },
         {
           "name": "provider",
           "type": "varchar(60)",
-          "key": "uk"
+          "key": "uk",
+          "description": "Participa en una restricción única."
         },
         {
           "name": "provider_method_ref",
           "type": "varchar(255)",
-          "key": "uk"
+          "key": "uk",
+          "description": "Participa en una restricción única."
         },
         {
           "name": "label",
-          "type": "varchar(100)"
+          "type": "varchar(100)",
+          "description": "Dato label de tbd_user_payment_methods."
         },
         {
           "name": "last_four",
-          "type": "char(4)"
+          "type": "char(4)",
+          "description": "Dato last four de tbd_user_payment_methods."
         },
         {
           "name": "is_default",
-          "type": "tinyint(1)"
+          "type": "tinyint(1)",
+          "description": "Indicador lógico/booleano; valores sujetos al tipo y restricciones declaradas."
         },
         {
           "name": "status",
-          "type": "bit(1)"
+          "type": "bit(1)",
+          "description": "Dato status de tbd_user_payment_methods."
         },
         {
           "name": "creation_date",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
         },
         {
           "name": "last_update",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo de última actualización automática."
         }
       ],
       "sources": [
@@ -818,53 +935,65 @@
         {
           "name": "person_ID",
           "type": "bigint unsigned",
-          "key": "pk"
+          "key": "pk",
+          "description": "Clave primaria. Identificador asignado automáticamente por la base de datos."
         },
         {
           "name": "user_ID",
           "type": "int unsigned",
           "key": "fk",
-          "references": "tb_users.ID"
+          "references": "tb_users.ID",
+          "description": "Referencia foránea a tb_users.ID."
         },
         {
           "name": "title",
-          "type": "varchar(30)"
+          "type": "varchar(30)",
+          "description": "Dato title de tb_people."
         },
         {
           "name": "given_names",
-          "type": "varchar(150)"
+          "type": "varchar(150)",
+          "description": "Dato given names de tb_people."
         },
         {
           "name": "family_names",
-          "type": "varchar(150)"
+          "type": "varchar(150)",
+          "description": "Dato family names de tb_people."
         },
         {
           "name": "birth_date",
-          "type": "date"
+          "type": "date",
+          "description": "Marca de tiempo/fecha del evento indicado por el nombre del campo."
         },
         {
           "name": "gender_ID",
-          "type": "enum"
+          "type": "enum",
+          "description": "Valor lógico restringido a: H, M, Prefiero no decirlo."
         },
         {
           "name": "phone",
-          "type": "varchar(25)"
+          "type": "varchar(25)",
+          "description": "Dato phone de tb_people."
         },
         {
           "name": "country_code",
-          "type": "char(2)"
+          "type": "char(2)",
+          "description": "Dato country code de tb_people."
         },
         {
           "name": "status",
-          "type": "bit(1)"
+          "type": "bit(1)",
+          "description": "Dato status de tb_people."
         },
         {
           "name": "creation_date",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
         },
         {
           "name": "last_update",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
         }
       ],
       "sources": [
@@ -885,53 +1014,65 @@
         {
           "name": "ID",
           "type": "bigint unsigned",
-          "key": "pk"
+          "key": "pk",
+          "description": "Clave primaria. Identificador asignado automáticamente por la base de datos."
         },
         {
           "name": "user_ID",
           "type": "int unsigned",
           "key": "fk",
-          "references": "tb_users.ID"
+          "references": "tb_users.ID",
+          "description": "Referencia foránea a tb_users.ID."
         },
         {
           "name": "address_label",
-          "type": "varchar(100)"
+          "type": "varchar(100)",
+          "description": "Dato address label de tb_user_addresses."
         },
         {
           "name": "recipient_name",
-          "type": "varchar(150)"
+          "type": "varchar(150)",
+          "description": "Dato recipient name de tb_user_addresses."
         },
         {
           "name": "recipient_phone",
-          "type": "varchar(25)"
+          "type": "varchar(25)",
+          "description": "Dato recipient phone de tb_user_addresses."
         },
         {
           "name": "delivery_instructions",
-          "type": "varchar(500)"
+          "type": "varchar(500)",
+          "description": "Dato delivery instructions de tb_user_addresses."
         },
         {
           "name": "latitude",
-          "type": "decimal(10,7)"
+          "type": "decimal(10,7)",
+          "description": "Dato latitude de tb_user_addresses."
         },
         {
           "name": "longitude",
-          "type": "decimal(10,7)"
+          "type": "decimal(10,7)",
+          "description": "Dato longitude de tb_user_addresses."
         },
         {
           "name": "is_default",
-          "type": "tinyint(1)"
+          "type": "tinyint(1)",
+          "description": "Indicador lógico/booleano; valores sujetos al tipo y restricciones declaradas."
         },
         {
           "name": "status",
-          "type": "bit(1)"
+          "type": "bit(1)",
+          "description": "Dato status de tb_user_addresses."
         },
         {
           "name": "creation_date",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
         },
         {
           "name": "last_update",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo de última actualización automática."
         }
       ],
       "sources": [
@@ -952,37 +1093,45 @@
         {
           "name": "ID",
           "type": "int unsigned",
-          "key": "pk"
+          "key": "pk",
+          "description": "Clave primaria. Identificador asignado automáticamente por la base de datos."
         },
         {
           "name": "email",
           "type": "varchar(80)",
-          "key": "uk"
+          "key": "uk",
+          "description": "Participa en una restricción única."
         },
         {
           "name": "nickname",
           "type": "varchar(100)",
-          "key": "uk"
+          "key": "uk",
+          "description": "Participa en una restricción única."
         },
         {
           "name": "password",
-          "type": "varchar(255)"
+          "type": "varchar(255)",
+          "description": "Dato password de tb_users."
         },
         {
           "name": "creation_date",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
         },
         {
           "name": "last_update",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
         },
         {
           "name": "last_login",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Dato last login de tb_users."
         },
         {
           "name": "status",
-          "type": "bit(1)"
+          "type": "bit(1)",
+          "description": "Dato status de tb_users."
         }
       ],
       "sources": [
@@ -1006,7 +1155,8 @@
           "key": [
             "uk",
             "pk"
-          ]
+          ],
+          "description": "Clave primaria. Participa en una restricción única. Identificador asignado automáticamente por la base de datos."
         },
         {
           "name": "address_ID",
@@ -1016,33 +1166,40 @@
             "fk",
             "fk"
           ],
-          "references": "tb_user_addresses.ID"
+          "references": "tb_user_addresses.ID",
+          "description": "Referencia foránea a tb_user_addresses.ID. Referencia foránea a tbd_address_components.address_ID. Participa en una restricción única."
         },
         {
           "name": "value",
-          "type": "varchar(255)"
+          "type": "varchar(255)",
+          "description": "Dato value de tbd_address_components."
         },
         {
           "name": "component_type",
-          "type": "varchar(50)"
+          "type": "varchar(50)",
+          "description": "Dato component type de tbd_address_components."
         },
         {
           "name": "status",
-          "type": "bit(1)"
+          "type": "bit(1)",
+          "description": "Dato status de tbd_address_components."
         },
         {
           "name": "address_sup_ID",
           "type": "bigint unsigned",
           "key": "fk",
-          "references": "tbd_address_components.ID"
+          "references": "tbd_address_components.ID",
+          "description": "Referencia foránea a tbd_address_components.ID."
         },
         {
           "name": "creation_date",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
         },
         {
           "name": "last_update",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo de última actualización automática."
         }
       ],
       "sources": [
@@ -1063,40 +1220,49 @@
         {
           "name": "ID",
           "type": "int unsigned",
-          "key": "pk"
+          "key": "pk",
+          "description": "Clave primaria. Identificador asignado automáticamente por la base de datos."
         },
         {
           "name": "SKU",
           "type": "varchar(50)",
-          "key": "uk"
+          "key": "uk",
+          "description": "Participa en una restricción única."
         },
         {
           "name": "name",
-          "type": "varchar(250)"
+          "type": "varchar(250)",
+          "description": "Dato name de tb_products."
         },
         {
           "name": "description",
-          "type": "text"
+          "type": "text",
+          "description": "Dato description de tb_products."
         },
         {
           "name": "current_price",
-          "type": "decimal(10,2)"
+          "type": "decimal(10,2)",
+          "description": "Dato current price de tb_products."
         },
         {
           "name": "current_stock",
-          "type": "int unsigned"
+          "type": "int unsigned",
+          "description": "Dato current stock de tb_products."
         },
         {
           "name": "status",
-          "type": "bit(1)"
+          "type": "bit(1)",
+          "description": "Dato status de tb_products."
         },
         {
           "name": "creation_date",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
         },
         {
           "name": "last_update",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
         }
       ],
       "sources": [
@@ -1117,34 +1283,41 @@
         {
           "name": "ID",
           "type": "int unsigned",
-          "key": "pk"
+          "key": "pk",
+          "description": "Clave primaria. Identificador asignado automáticamente por la base de datos."
         },
         {
           "name": "name",
           "type": "varchar(120)",
-          "key": "uk"
+          "key": "uk",
+          "description": "Participa en una restricción única."
         },
         {
           "name": "description",
-          "type": "text"
+          "type": "text",
+          "description": "Dato description de tbc_categories."
         },
         {
           "name": "sup_id_category",
           "type": "int unsigned",
           "key": "fk",
-          "references": "tbc_categories.ID"
+          "references": "tbc_categories.ID",
+          "description": "Referencia foránea a tbc_categories.ID."
         },
         {
           "name": "status",
-          "type": "bit(1)"
+          "type": "bit(1)",
+          "description": "Dato status de tbc_categories."
         },
         {
           "name": "creation_date",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
         },
         {
           "name": "last_update",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo de última actualización automática."
         }
       ],
       "sources": [
@@ -1169,7 +1342,8 @@
             "fk",
             "pk"
           ],
-          "references": "tbc_categories.ID"
+          "references": "tbc_categories.ID",
+          "description": "Clave primaria. Referencia foránea a tbc_categories.ID."
         },
         {
           "name": "product_ID",
@@ -1178,19 +1352,23 @@
             "fk",
             "pk"
           ],
-          "references": "tb_products.ID"
+          "references": "tb_products.ID",
+          "description": "Clave primaria. Referencia foránea a tb_products.ID."
         },
         {
           "name": "status",
-          "type": "bit(1)"
+          "type": "bit(1)",
+          "description": "Dato status de tbd_products_categories."
         },
         {
           "name": "creation_date",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
         },
         {
           "name": "last_update",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo de última actualización automática."
         }
       ],
       "sources": [
@@ -1216,7 +1394,8 @@
             "fk",
             "pk"
           ],
-          "references": "tb_users.ID"
+          "references": "tb_users.ID",
+          "description": "Clave primaria. Referencia foránea a tb_users.ID. Participa en una restricción única."
         },
         {
           "name": "product_id",
@@ -1226,27 +1405,33 @@
             "fk",
             "pk"
           ],
-          "references": "tb_products.ID"
+          "references": "tb_products.ID",
+          "description": "Clave primaria. Referencia foránea a tb_products.ID. Participa en una restricción única."
         },
         {
           "name": "type_ownership",
-          "type": "enum"
+          "type": "enum",
+          "description": "Valor lógico restringido a: Owner, Reseller, Distributor."
         },
         {
           "name": "status",
-          "type": "bit(1)"
+          "type": "bit(1)",
+          "description": "Dato status de tbd_products_users_providers."
         },
         {
           "name": "avalaible_date",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo/fecha del evento indicado por el nombre del campo."
         },
         {
           "name": "creation_date",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
         },
         {
           "name": "last_update",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
         }
       ],
       "sources": [
@@ -1270,7 +1455,8 @@
           "key": [
             "uk",
             "pk"
-          ]
+          ],
+          "description": "Clave primaria. Participa en una restricción única. Identificador asignado automáticamente por la base de datos."
         },
         {
           "name": "payment_ID",
@@ -1279,71 +1465,86 @@
             "uk",
             "fk"
           ],
-          "references": "tb_payments.ID"
+          "references": "tb_payments.ID",
+          "description": "Referencia foránea a tb_payments.ID. Participa en una restricción única."
         },
         {
           "name": "cancellation_ID",
           "type": "int unsigned",
           "key": "fk",
-          "references": "tb_order_cancellations.ID"
+          "references": "tb_order_cancellations.ID",
+          "description": "Referencia foránea a tb_order_cancellations.ID."
         },
         {
           "name": "return_ID",
           "type": "int unsigned",
           "key": "fk",
-          "references": "tb_returns.ID"
+          "references": "tb_returns.ID",
+          "description": "Referencia foránea a tb_returns.ID."
         },
         {
           "name": "reason",
-          "type": "enum"
+          "type": "enum",
+          "description": "Valor lógico restringido a: Cancellation, Return, Adjustment, Goodwill."
         },
         {
           "name": "amount",
-          "type": "decimal(10,2)"
+          "type": "decimal(10,2)",
+          "description": "Dato amount de tb_refunds."
         },
         {
           "name": "currency",
-          "type": "char(3)"
+          "type": "char(3)",
+          "description": "Dato currency de tb_refunds."
         },
         {
           "name": "refund_status",
-          "type": "enum"
+          "type": "enum",
+          "description": "Valor lógico restringido a: Pending, Submitted, Succeeded, Failed, Canceled."
         },
         {
           "name": "provider",
           "type": "varchar(60)",
-          "key": "uk"
+          "key": "uk",
+          "description": "Participa en una restricción única."
         },
         {
           "name": "provider_reference",
           "type": "varchar(150)",
-          "key": "uk"
+          "key": "uk",
+          "description": "Participa en una restricción única."
         },
         {
           "name": "requested_by_user_ID",
           "type": "int unsigned",
           "key": "fk",
-          "references": "tb_users.ID"
+          "references": "tb_users.ID",
+          "description": "Referencia foránea a tb_users.ID."
         },
         {
           "name": "reason_detail",
-          "type": "varchar(1000)"
+          "type": "varchar(1000)",
+          "description": "Dato reason detail de tb_refunds."
         },
         {
           "name": "requested_at",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
         },
         {
           "name": "processed_at",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo/fecha del evento indicado por el nombre del campo."
         },
         {
           "name": "creation_date",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
         },
         {
           "name": "last_update",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo de última actualización automática."
         }
       ],
       "sources": [
@@ -1364,67 +1565,82 @@
         {
           "name": "ID",
           "type": "int unsigned",
-          "key": "pk"
+          "key": "pk",
+          "description": "Clave primaria. Identificador asignado automáticamente por la base de datos."
         },
         {
           "name": "buyer_order_ID",
           "type": "int unsigned",
           "key": "fk",
-          "references": "tbd_buyer_orders.ID"
+          "references": "tbd_buyer_orders.ID",
+          "description": "Referencia foránea a tbd_buyer_orders.ID."
         },
         {
           "name": "requested_by_user_ID",
           "type": "int unsigned",
           "key": "fk",
-          "references": "tb_users.ID"
+          "references": "tb_users.ID",
+          "description": "Referencia foránea a tb_users.ID."
         },
         {
           "name": "reason_code",
-          "type": "varchar(60)"
+          "type": "varchar(60)",
+          "description": "Dato reason code de tb_returns."
         },
         {
           "name": "reason_detail",
-          "type": "varchar(1000)"
+          "type": "varchar(1000)",
+          "description": "Dato reason detail de tb_returns."
         },
         {
           "name": "return_status",
-          "type": "enum"
+          "type": "enum",
+          "description": "Valor lógico restringido a: Requested, Authorized, Rejected, LabelCreated, InTransit, Received, Inspected, Approved, PartiallyApproved, Refunded, Closed."
         },
         {
           "name": "return_carrier",
-          "type": "varchar(100)"
+          "type": "varchar(100)",
+          "description": "Dato return carrier de tb_returns."
         },
         {
           "name": "return_tracking_number",
-          "type": "varchar(150)"
+          "type": "varchar(150)",
+          "description": "Dato return tracking number de tb_returns."
         },
         {
           "name": "requested_at",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
         },
         {
           "name": "authorized_at",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo/fecha del evento indicado por el nombre del campo."
         },
         {
           "name": "received_at",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo/fecha del evento indicado por el nombre del campo."
         },
         {
           "name": "closed_at",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo/fecha del evento indicado por el nombre del campo."
         },
         {
           "name": "internal_notes",
-          "type": "varchar(1000)"
+          "type": "varchar(1000)",
+          "description": "Dato internal notes de tb_returns."
         },
         {
           "name": "creation_date",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
         },
         {
           "name": "last_update",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo de última actualización automática."
         }
       ],
       "sources": [
@@ -1445,95 +1661,117 @@
         {
           "name": "ID",
           "type": "int unsigned",
-          "key": "pk"
+          "key": "pk",
+          "description": "Clave primaria. Identificador asignado automáticamente por la base de datos."
         },
         {
           "name": "buyer_order_ID",
           "type": "int unsigned",
           "key": "fk",
-          "references": "tbd_buyer_orders.ID"
+          "references": "tbd_buyer_orders.ID",
+          "description": "Referencia foránea a tbd_buyer_orders.ID."
         },
         {
           "name": "address_ID",
           "type": "bigint unsigned",
           "key": "fk",
-          "references": "tb_user_addresses.ID"
+          "references": "tb_user_addresses.ID",
+          "description": "Referencia foránea a tb_user_addresses.ID."
         },
         {
           "name": "recipient_name",
-          "type": "varchar(150)"
+          "type": "varchar(150)",
+          "description": "Dato recipient name de tb_shipments."
         },
         {
           "name": "recipient_phone",
-          "type": "varchar(25)"
+          "type": "varchar(25)",
+          "description": "Dato recipient phone de tb_shipments."
         },
         {
           "name": "address_line_1",
-          "type": "varchar(255)"
+          "type": "varchar(255)",
+          "description": "Dato address line 1 de tb_shipments."
         },
         {
           "name": "address_line_2",
-          "type": "varchar(255)"
+          "type": "varchar(255)",
+          "description": "Dato address line 2 de tb_shipments."
         },
         {
           "name": "city",
-          "type": "varchar(120)"
+          "type": "varchar(120)",
+          "description": "Dato city de tb_shipments."
         },
         {
           "name": "state_region",
-          "type": "varchar(120)"
+          "type": "varchar(120)",
+          "description": "Dato state region de tb_shipments."
         },
         {
           "name": "postal_code",
-          "type": "varchar(20)"
+          "type": "varchar(20)",
+          "description": "Dato postal code de tb_shipments."
         },
         {
           "name": "country_code",
-          "type": "char(2)"
+          "type": "char(2)",
+          "description": "Dato country code de tb_shipments."
         },
         {
           "name": "carrier",
-          "type": "varchar(100)"
+          "type": "varchar(100)",
+          "description": "Dato carrier de tb_shipments."
         },
         {
           "name": "service_level",
-          "type": "varchar(100)"
+          "type": "varchar(100)",
+          "description": "Dato service level de tb_shipments."
         },
         {
           "name": "tracking_number",
-          "type": "varchar(150)"
+          "type": "varchar(150)",
+          "description": "Dato tracking number de tb_shipments."
         },
         {
           "name": "tracking_url",
-          "type": "varchar(500)"
+          "type": "varchar(500)",
+          "description": "Dato tracking url de tb_shipments."
         },
         {
           "name": "shipment_status",
-          "type": "enum"
+          "type": "enum",
+          "description": "Valor lógico restringido a: Pending, LabelCreated, ReadyToShip, InTransit, OutForDelivery, Delivered, DeliveryFailed, Lost, Returned."
         },
         {
           "name": "shipping_cost",
-          "type": "decimal(12,2)"
+          "type": "decimal(12,2)",
+          "description": "Dato shipping cost de tb_shipments."
         },
         {
           "name": "shipped_at",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo/fecha del evento indicado por el nombre del campo."
         },
         {
           "name": "estimated_delivery_at",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo/fecha del evento indicado por el nombre del campo."
         },
         {
           "name": "delivered_at",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo/fecha del evento indicado por el nombre del campo."
         },
         {
           "name": "creation_date",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
         },
         {
           "name": "last_update",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo de última actualización automática."
         }
       ],
       "sources": [
@@ -1554,7 +1792,8 @@
         {
           "name": "ID",
           "type": "int unsigned",
-          "key": "pk"
+          "key": "pk",
+          "description": "Clave primaria. Identificador asignado automáticamente por la base de datos."
         },
         {
           "name": "return_ID",
@@ -1563,7 +1802,8 @@
             "uk",
             "fk"
           ],
-          "references": "tb_returns.ID"
+          "references": "tb_returns.ID",
+          "description": "Referencia foránea a tb_returns.ID. Participa en una restricción única."
         },
         {
           "name": "order_item_ID",
@@ -1572,35 +1812,43 @@
             "uk",
             "fk"
           ],
-          "references": "tbd_order_items.ID"
+          "references": "tbd_order_items.ID",
+          "description": "Referencia foránea a tbd_order_items.ID. Participa en una restricción única."
         },
         {
           "name": "quantity",
-          "type": "int unsigned"
+          "type": "int unsigned",
+          "description": "Dato quantity de tbd_return_items."
         },
         {
           "name": "item_condition",
-          "type": "enum"
+          "type": "enum",
+          "description": "Valor lógico restringido a: Unopened, Unused, Used, Damaged, Defective, Other."
         },
         {
           "name": "disposition",
-          "type": "enum"
+          "type": "enum",
+          "description": "Valor lógico restringido a: Pending, Restock, Repair, Dispose, SupplierReturn."
         },
         {
           "name": "approved_refund_amount",
-          "type": "decimal(12,2)"
+          "type": "decimal(12,2)",
+          "description": "Dato approved refund amount de tbd_return_items."
         },
         {
           "name": "item_status",
-          "type": "enum"
+          "type": "enum",
+          "description": "Valor lógico restringido a: Requested, Approved, Rejected, Received, Refunded."
         },
         {
           "name": "creation_date",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
         },
         {
           "name": "last_update",
-          "type": "datetime"
+          "type": "datetime",
+          "description": "Marca de tiempo de última actualización automática."
         }
       ],
       "sources": [

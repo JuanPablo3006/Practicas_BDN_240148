@@ -1,6 +1,6 @@
 import json, re, html, pathlib, subprocess
 
-ROOT = pathlib.Path(__file__).resolve().parents[2]
+ROOT = pathlib.Path(__file__).resolve().parents[3]
 OUT = pathlib.Path(__file__).resolve().parent
 SQLPATH = pathlib.Path('Practica03/backups/respaldo031126.sql')
 SQL = (ROOT / SQLPATH).read_text(encoding='utf-8')
@@ -38,6 +38,28 @@ def classify(col):
     scale='Razón' if nature=='Cuantitativo' else 'Intervalo' if nature=='Temporal' else 'Nominal'
     domain=col.get('enum') or col.get('check') or ('Entero sin signo' if 'unsigned' in typ else 'Valor SQL: '+col['type'])
     return {'values':'Monovalorado (un escalar por fila)','composition':'Simple (columna atómica; no se documenta descomposición semántica adicional)','nature':nature,'scale':scale,'domain':domain,'origin':origin}
+
+def insert_counts(sql):
+    counts={}
+    for m in re.finditer(r'\bINSERT\s+(?:IGNORE\s+)?INTO\s+`([^`]+)`(?:\s*\((.*?)\))?\s*VALUES\s*',sql,re.I|re.S):
+        table=m.group(1); i=m.end(); depth=0; quote=None; esc=False; rows=0
+        while i<len(sql):
+            ch=sql[i]
+            if esc: esc=False
+            elif ch=='\\' and quote: esc=True
+            elif quote:
+                if ch==quote:
+                    if i+1<len(sql) and sql[i+1]==quote: i+=1
+                    else: quote=None
+            elif ch in "'\"": quote=ch
+            elif ch=='(': rows+=1 if depth==0 else 0; depth+=1
+            elif ch==')': depth=max(0,depth-1)
+            elif ch==';' and depth==0: break
+            i+=1
+        counts[table]=counts.get(table,0)+rows
+    return counts
+
+row_counts=insert_counts(SQL)
 
 tables=[]; table_blocks=[]
 for m in re.finditer(r'CREATE TABLE `([^`]+)` \((.*?)\) ENGINE=', SQL, re.S):
@@ -85,7 +107,24 @@ for m in re.finditer(r'CREATE TABLE `([^`]+)` \((.*?)\) ENGINE=', SQL, re.S):
         c['can_omit_on_insert']=bool(c['nullable'] or c['default'] is not None or c['auto_increment'] or c['generated'])
         c['keys']=c.get('keys',[])
     ln=SQL[:m.start()].count('\n')+1
-    tables.append({'name':name,'columns':cols,'primary_key':pk,'indexes':indexes,'foreign_keys':fks,'checks':checks,'engine':(re.search(r'ENGINE=([^\s;]+)',SQL[m.end():m.end()+300]).group(1) if re.search(r'ENGINE=([^\s;]+)',SQL[m.end():m.end()+300]) else 'InnoDB'),'line':ln})
+    tbl={'name':name,'columns':cols,'primary_key':pk,'indexes':indexes,'foreign_keys':fks,'checks':checks,'engine':(re.search(r'ENGINE=([^\s;]+)',SQL[m.end():m.end()+300]).group(1) if re.search(r'ENGINE=([^\s;]+)',SQL[m.end():m.end()+300]) else 'InnoDB'),'line':ln,'records':row_counts.get(name,0)}
+    for c in cols:
+        desc=[]
+        if 'pk' in c['keys']: desc.append('Clave primaria.')
+        for fk in fks:
+            if c['name'] in fk['columns']:
+                j=fk['columns'].index(c['name']); desc.append('Referencia foránea a '+fk['references'].split('.')[0]+'.'+fk['references'].split('.')[1].split(',')[j]+'.')
+        if 'uk' in c['keys']: desc.append('Participa en una restricción única.')
+        if c['generated']: desc.append('Campo generado por la expresión declarada en el DDL.')
+        elif c['auto_increment']: desc.append('Identificador asignado automáticamente por la base de datos.')
+        if c['enum']: desc.append('Valor lógico restringido a: '+', '.join(c['enum'])+'.')
+        elif any(x in c['name'].lower() for x in ('is_','has_','_enabled')) or 'bool' in c['type'].lower(): desc.append('Indicador lógico/booleano; valores sujetos al tipo y restricciones declaradas.')
+        if c['default'] and 'CURRENT_TIMESTAMP' in c['default'].upper(): desc.append('Marca de tiempo inicializada automáticamente al crear el registro.')
+        elif c['on_update'] or c['name'].lower()=='last_update': desc.append('Marca de tiempo de última actualización'+(' automática.' if c['on_update'] else '.'))
+        elif any(x in c['name'].lower() for x in ('_at','_date','_time')): desc.append('Marca de tiempo/fecha del evento indicado por el nombre del campo.')
+        if not desc: desc.append('Dato '+c['name'].replace('_',' ').lower()+' de '+name+'.')
+        c['description']=' '.join(desc)
+    tables.append(tbl)
     table_blocks.append((name,ln))
 
 triggers=[]
@@ -140,6 +179,7 @@ for ci,d in enumerate(domains):
                 ref_table,ref_cols=fk['references'].split('.',1)
                 local_cols=fk['columns']; remote_cols=ref_cols.split(',')
                 a['references']=ref_table+'.'+remote_cols[local_cols.index(c['name'])]
+            a['description']=c['description']
             attrs.append(a)
         maxname=max((len(a['name']) for a in attrs),default=8); maxtype=max((len(a['type']) for a in attrs),default=8)
         width=min(390,max(260,150+maxname*6+maxtype*5))
@@ -153,7 +193,7 @@ for i,(t,f) in enumerate(allfks):
 candidate={'schema_version':1,'diagram_type':'erd','meta':{'title':'MERE — db_test · Práctica 03','locale':'es','output':(OUT/ 'mere.html').relative_to(ROOT).as_posix(),'quality_profile':'standard','repository':{'url':ORIGIN,'provider':'github','link_mode':'web','revision':REV},'subtitle':'26 tablas · claves, relaciones y columnas físicas · fuente: respaldo031126.sql'},'layout':{'mode':'grid','gapX':64,'gapY':48},'entities':entities,'relationships':relationships,'cards':[{'dot':'cyan','title':'Lectura de claves y cardinalidad','items':['PK = clave primaria; FK = clave foránea; UK = restricción única. Una tabla hija con muchos registros puede apuntar a una tabla padre.','La opcionalidad de relación se infiere de la nulabilidad de la FK. Las reglas ON DELETE / ON UPDATE y detalles completos están en el diccionario interactivo.']},{'dot':'emerald','title':'Alcance de este MERE','items':['Muestra todas las columnas físicas, con nombre, tipo SQL y papel de clave.','La clasificación semántica, valores predeterminados, inserción, restricciones e índices se consulta en el diccionario de datos.']}]}
 (OUT/'candidate.json').write_text(json.dumps(candidate,ensure_ascii=False,indent=2),encoding='utf-8')
 
-data={'database':'db_test','source':SQLPATH.as_posix(),'server':'MySQL 9.3.0 (declarado en mysqldump)','tables':tables,'views':views,'triggers':triggers,'functions':functions,'procedures':procedures,'counts':{'tablas':len(tables),'columnas':sum(len(t['columns']) for t in tables),'vistas':len(views),'triggers':len(triggers),'funciones':len(functions),'procedimientos':len(procedures),'indices':sum(len(t['indexes']) for t in tables),'claves_foraneas':len(allfks)}}
+data={'database':'db_test','source':SQLPATH.as_posix(),'server':'MySQL 9.3.0 (declarado en mysqldump)','tables':tables,'views':views,'triggers':triggers,'functions':functions,'procedures':procedures,'counts':{'tablas':len(tables),'columnas':sum(len(t['columns']) for t in tables),'vistas':len(views),'triggers':len(triggers),'funciones':len(functions),'procedimientos':len(procedures),'indices':sum(len(t['indexes']) for t in tables),'claves_foraneas':len(allfks),'total_insert_records':sum(row_counts.values())}}
 jsondata=json.dumps(data,ensure_ascii=False).replace('</','<\\/')
 page='''<!doctype html><html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Diccionario de datos — db_test</title><style>
 :root{color-scheme:light dark;--bg:#101827;--panel:#192438;--line:#30415c;--fg:#eef4ff;--muted:#a9bad2;--accent:#65d6c4}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,Segoe UI,sans-serif}header{padding:28px max(20px,calc((100vw - 1320px)/2));background:#15243a;border-bottom:1px solid var(--line)}h1,h2,h3{line-height:1.2}h1{margin:0 0 6px}p{color:var(--muted)}main{max-width:1320px;margin:auto;padding:20px}.stats{display:flex;flex-wrap:wrap;gap:10px}.stat,.box,.tablecard{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px}.stat b{display:block;font-size:22px;color:var(--accent)}.toolbar{position:sticky;top:0;background:var(--bg);padding:12px 0;z-index:2;display:flex;gap:8px;flex-wrap:wrap}input,select,button{background:var(--panel);color:var(--fg);border:1px solid var(--line);padding:9px 12px;border-radius:8px}input{flex:1;min-width:220px}details{margin:10px 0}.tablecard summary{cursor:pointer;font-weight:700;font-size:17px}.tablemeta{color:var(--muted);font-size:13px;margin:8px 0}table{width:100%;border-collapse:collapse;display:block;overflow:auto;margin:10px 0}td,th{text-align:left;padding:8px;border-bottom:1px solid var(--line);vertical-align:top}th{color:var(--accent);position:sticky;top:0;background:var(--panel)}.pill{border:1px solid var(--line);border-radius:99px;padding:2px 7px;font-size:12px;white-space:nowrap}code{color:#b6e4ff;overflow-wrap:anywhere}.objgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:10px}.box h3{margin-top:0}.small{font-size:13px;color:var(--muted)}a{color:var(--accent)}.gloss{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}footer{max-width:1320px;margin:auto;padding:20px;color:var(--muted)}
@@ -167,5 +207,10 @@ if(k==='all'||k==='triggers')parts.push(`<h2>Triggers (${D.triggers.length})</h2
 if(k==='all'||k==='routines')parts.push(`<h2>Funciones (${D.functions.length})</h2><div class="objgrid">${D.functions.filter(x=>JSON.stringify(x).toLowerCase().includes(q)).map(x=>`<div class="box"><b><code>${esc(x.name)}</code></b><p><code>${esc(x.signature)}</code> → ${esc(x.returns)}</p><span class="small">DDL línea ${x.line}</span></div>`).join('')}</div><h2>Procedimientos (${D.procedures.length})</h2><div class="objgrid">${D.procedures.filter(x=>JSON.stringify(x).toLowerCase().includes(q)).map(x=>`<div class="box"><b><code>${esc(x.name)}</code></b><p><code>${esc(x.signature)}</code></p><span class="small">DDL línea ${x.line}</span></div>`).join('')}</div>`);document.querySelector('#content').innerHTML=parts.join('')||'<p>Sin coincidencias</p>'}
 document.querySelector('#q').oninput=render;document.querySelector('#kind').onchange=render;document.querySelector('#expand').onclick=()=>document.querySelectorAll('details.tablecard').forEach(x=>x.open=true);document.querySelector('#collapse').onclick=()=>document.querySelectorAll('details.tablecard').forEach(x=>x.open=false);render();
 </script></html>'''.replace('DATA_PLACEHOLDER',jsondata)
+# Add the INSERT summary and per-entity/per-field details to the generated HTML.
+page=page.replace('<h2>Tablas y campos</h2>`+D.tables.filter', '<h2>Tablas y campos</h2><div class="box"><h3>Registros por tabla (según los INSERT del respaldo)</h3><ul>${D.tables.map(t=>`<li><code>${esc(t.name)}</code>: ${t.records}</li>`).join(\'\')}</ul><b>Total: ${D.counts.total_insert_records}</b></div>`+D.tables.filter')
+page=page.replace('<summary>${esc(t.name)} <span class="pill">${t.columns.length} campos</span>', '<summary>${esc(t.name)} <span class="pill">Registros: ${t.records}</span> <span class="pill">${t.columns.length} campos</span>')
+page=page.replace('<th>Claves / NULL / inserción</th><th>DEFAULT</th>', '<th>Claves / NULL / inserción</th><th>DESCRIPCIÓN</th><th>DEFAULT</th>')
+page=page.replace('</td><td>${esc(c.default??\'—\')}</td><td>${esc(c.on_update??\'—\')}</td>', '</td><td>${esc(c.description)}</td><td>${esc(c.default??\'—\')}</td><td>${esc(c.on_update??\'—\')}</td>')
 (OUT/'diccionario-datos.html').write_text(page,encoding='utf-8')
 print(json.dumps(data['counts'],ensure_ascii=False))

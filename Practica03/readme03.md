@@ -35,11 +35,17 @@ El sistema está compuesto por los 12 entregables requeridos para la práctica:
 
 ### 1. Visualizar el Diccionario y el MERE desde la Terminal
 
+## 1. Recompilar / Regenerar la Documentación HTML
+Ejecuta el script generador si modificas la base de datos o actualizas el archivo de respaldo `.sql`:
+
+```powershell
+py Practica03/.archify/erd-db-test-practica03-20261103/build_docs.py
+
 Puedes lanzar la documentación directamente en tu navegador predeterminado desde **PowerShell**:
 
 * **Abrir Diccionario de Datos:**
   ```powershell
-  Start-Process ".archify/erd-db-test-practica03-20261103/diccionario-datos.html"
+  Start-Process "Practica03/.archify/erd-db-test-practica03-20261103/diccionario-datos.html"
 ---
 
 ## Diccionario de Datos y MERE de `db_test`
