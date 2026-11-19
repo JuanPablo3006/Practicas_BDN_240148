@@ -4,7 +4,9 @@
 
 ---
 
-|ID|Numero de Practica| Nombre de la Práctica|Potenciador|Estatus|
-|---|---|---|---|---|
-|1.|Metodologia de evaluacion de la materia|Transcribir en libreta y comprender la metodologia y fechas de evaluacion de la asignatura| 5|🟢concluida|
-|2.|Conexiones remotas para bases de datos SQL|Crear y administrar usuarios y privilegios para conexiones desde internet o redes locales| 60|🟢 concluida|
+|ID| Nombre de la Práctica|Potenciador|Estatus|
+|---|---|---|---|
+|1.|Transcribir en libreta y comprender la metodologia y fechas de evaluacion de la asignatura| 5|🟢concluida|
+|2.|Crear y administrar usuarios y privilegios para conexiones desde internet o redes locales| 60|🟢 concluida|
+|3.|Manipulacion de Datos, Relaciones, Procedimientos, Funciones y Eventos en Conexiones Remotas | 100|🟢concluida|
+|4.|Simulacion de Procesos de Compra| 100|🟢 concluida|
