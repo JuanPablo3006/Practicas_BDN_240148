@@ -10,3 +10,5 @@
 |2.|Crear y administrar usuarios y privilegios para conexiones desde internet o redes locales| 60|🟢 concluida|
 |3.|Manipulacion de Datos, Relaciones, Procedimientos, Funciones y Eventos en Conexiones Remotas | 100|🟢concluida|
 |4.|Simulacion de Procesos de Compra| 100|🟢 concluida|
+
+Documentación de la Práctica 04: [diccionario de datos, MERE y resumen](Practica04/README.md).

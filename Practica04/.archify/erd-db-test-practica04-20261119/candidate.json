@@ -1,0 +1,2286 @@
+{
+  "schema_version": 1,
+  "diagram_type": "erd",
+  "meta": {
+    "title": "MERE — db_test · Práctica 04",
+    "locale": "es",
+    "output": "Practica04/docs/mere.html",
+    "quality_profile": "standard",
+    "subtitle": "26 tablas · claves, relaciones y columnas físicas · fuente: respaldo181126.sql"
+  },
+  "layout": {
+    "mode": "grid",
+    "gapX": 64,
+    "gapY": 48
+  },
+  "entities": [
+    {
+      "id": "tb_carts",
+      "label": "tb_carts",
+      "tag": "Carrito y listas",
+      "row": 0,
+      "col": 0,
+      "width": 288,
+      "attributes": [
+        {
+          "name": "ID",
+          "type": "int unsigned",
+          "key": "pk",
+          "description": "Clave primaria. Identificador asignado automáticamente por la base de datos."
+        },
+        {
+          "name": "user_ID",
+          "type": "int unsigned",
+          "key": [
+            "uk",
+            "fk"
+          ],
+          "references": "tb_users.ID",
+          "description": "Referencia foránea a tb_users.ID. Participa en una restricción única."
+        },
+        {
+          "name": "status",
+          "type": "bit(1)",
+          "description": "Dato status de tb_carts."
+        },
+        {
+          "name": "creation_date",
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
+        },
+        {
+          "name": "last_update",
+          "type": "datetime",
+          "description": "Marca de tiempo de última actualización automática."
+        }
+      ],
+      "sources": [
+        {
+          "path": "Practica04/backups/respaldo181126.sql",
+          "line": 27
+        }
+      ]
+    },
+    {
+      "id": "tbd_cart_items",
+      "label": "tbd_cart_items",
+      "tag": "Carrito y listas",
+      "row": 1,
+      "col": 0,
+      "width": 288,
+      "attributes": [
+        {
+          "name": "cart_ID",
+          "type": "int unsigned",
+          "key": [
+            "fk",
+            "pk"
+          ],
+          "references": "tb_carts.ID",
+          "description": "Clave primaria. Referencia foránea a tb_carts.ID."
+        },
+        {
+          "name": "provider_ID",
+          "type": "int unsigned",
+          "key": [
+            "fk",
+            "pk"
+          ],
+          "references": "tbd_products_users_providers.user_id",
+          "description": "Clave primaria. Referencia foránea a tbd_products_users_providers.user_id."
+        },
+        {
+          "name": "product_ID",
+          "type": "int unsigned",
+          "key": [
+            "fk",
+            "fk",
+            "pk"
+          ],
+          "references": "tbd_products_users_providers.product_id",
+          "description": "Clave primaria. Referencia foránea a tbd_products_users_providers.product_id. Referencia foránea a tbd_products_users_providers.product_id."
+        },
+        {
+          "name": "quantity",
+          "type": "int unsigned",
+          "description": "Dato quantity de tbd_cart_items."
+        },
+        {
+          "name": "creation_date",
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
+        }
+      ],
+      "sources": [
+        {
+          "path": "Practica04/backups/respaldo181126.sql",
+          "line": 1709
+        }
+      ]
+    },
+    {
+      "id": "tbd_users_wishlist_products",
+      "label": "tbd_users_wishlist_products",
+      "tag": "Carrito y listas",
+      "row": 2,
+      "col": 0,
+      "width": 288,
+      "attributes": [
+        {
+          "name": "user_ID",
+          "type": "int unsigned",
+          "key": [
+            "fk",
+            "pk"
+          ],
+          "references": "tb_users.ID",
+          "description": "Clave primaria. Referencia foránea a tb_users.ID."
+        },
+        {
+          "name": "product_ID",
+          "type": "int unsigned",
+          "key": [
+            "fk",
+            "pk"
+          ],
+          "references": "tb_products.ID",
+          "description": "Clave primaria. Referencia foránea a tb_products.ID."
+        },
+        {
+          "name": "status",
+          "type": "bit(1)",
+          "description": "Dato status de tbd_users_wishlist_products."
+        },
+        {
+          "name": "creation_date",
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
+        },
+        {
+          "name": "last_update",
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
+        }
+      ],
+      "sources": [
+        {
+          "path": "Practica04/backups/respaldo181126.sql",
+          "line": 2248
+        }
+      ]
+    },
+    {
+      "id": "tb_logs",
+      "label": "tb_logs",
+      "tag": "Auditoría",
+      "row": 0,
+      "col": 1,
+      "width": 306,
+      "attributes": [
+        {
+          "name": "ID",
+          "type": "int",
+          "key": "pk",
+          "description": "Clave primaria. Identificador asignado automáticamente por la base de datos."
+        },
+        {
+          "name": "table_name",
+          "type": "varchar(100)",
+          "description": "Dato table name de tb_logs."
+        },
+        {
+          "name": "operation",
+          "type": "enum",
+          "description": "Valor lógico restringido a: Create, Read, Update, Delete."
+        },
+        {
+          "name": "db_users",
+          "type": "varchar(80)",
+          "description": "Dato db users de tb_logs."
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "description": "Dato description de tb_logs."
+        },
+        {
+          "name": "operation_date",
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
+        },
+        {
+          "name": "operation_status",
+          "type": "bit(1)",
+          "description": "Dato operation status de tb_logs."
+        }
+      ],
+      "sources": [
+        {
+          "path": "Practica04/backups/respaldo181126.sql",
+          "line": 110
+        }
+      ]
+    },
+    {
+      "id": "tb_order_cancellations",
+      "label": "tb_order_cancellations",
+      "tag": "Pedidos y cancelaciones",
+      "row": 0,
+      "col": 2,
+      "width": 335,
+      "attributes": [
+        {
+          "name": "ID",
+          "type": "int unsigned",
+          "key": "pk",
+          "description": "Clave primaria. Identificador asignado automáticamente por la base de datos."
+        },
+        {
+          "name": "order_ID",
+          "type": "int unsigned",
+          "key": "fk",
+          "references": "tb_orders.ID",
+          "description": "Referencia foránea a tb_orders.ID."
+        },
+        {
+          "name": "buyer_order_ID",
+          "type": "int unsigned",
+          "key": "fk",
+          "references": "tbd_buyer_orders.ID",
+          "description": "Referencia foránea a tbd_buyer_orders.ID."
+        },
+        {
+          "name": "requested_by_user_ID",
+          "type": "int unsigned",
+          "key": "fk",
+          "references": "tb_users.ID",
+          "description": "Referencia foránea a tb_users.ID."
+        },
+        {
+          "name": "cancellation_scope",
+          "type": "enum",
+          "description": "Valor lógico restringido a: WholeOrder, SellerOrder, Items."
+        },
+        {
+          "name": "reason_code",
+          "type": "varchar(60)",
+          "description": "Dato reason code de tb_order_cancellations."
+        },
+        {
+          "name": "reason_detail",
+          "type": "varchar(1000)",
+          "description": "Dato reason detail de tb_order_cancellations."
+        },
+        {
+          "name": "cancellation_status",
+          "type": "enum",
+          "description": "Valor lógico restringido a: Requested, Approved, Rejected, Completed."
+        },
+        {
+          "name": "requested_at",
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
+        },
+        {
+          "name": "reviewed_at",
+          "type": "datetime",
+          "description": "Marca de tiempo/fecha del evento indicado por el nombre del campo."
+        },
+        {
+          "name": "completed_at",
+          "type": "datetime",
+          "description": "Marca de tiempo/fecha del evento indicado por el nombre del campo."
+        },
+        {
+          "name": "internal_notes",
+          "type": "varchar(1000)",
+          "description": "Dato internal notes de tb_order_cancellations."
+        },
+        {
+          "name": "creation_date",
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
+        },
+        {
+          "name": "last_update",
+          "type": "datetime",
+          "description": "Marca de tiempo de última actualización automática."
+        }
+      ],
+      "sources": [
+        {
+          "path": "Practica04/backups/respaldo181126.sql",
+          "line": 150
+        }
+      ]
+    },
+    {
+      "id": "tb_orders",
+      "label": "tb_orders",
+      "tag": "Pedidos y cancelaciones",
+      "row": 1,
+      "col": 2,
+      "width": 299,
+      "attributes": [
+        {
+          "name": "ID",
+          "type": "int unsigned",
+          "key": "pk",
+          "description": "Clave primaria. Identificador asignado automáticamente por la base de datos."
+        },
+        {
+          "name": "key",
+          "type": "varchar(40)",
+          "description": "Dato key de tb_orders."
+        },
+        {
+          "name": "User_ID",
+          "type": "int unsigned",
+          "key": "fk",
+          "references": "tb_users.ID",
+          "description": "Referencia foránea a tb_users.ID."
+        },
+        {
+          "name": "cart_ID",
+          "type": "int unsigned",
+          "key": "fk",
+          "references": "tb_carts.ID",
+          "description": "Referencia foránea a tb_carts.ID."
+        },
+        {
+          "name": "total_products",
+          "type": "int",
+          "description": "Dato total products de tb_orders."
+        },
+        {
+          "name": "total_cost",
+          "type": "decimal(10,3)",
+          "description": "Dato total cost de tb_orders."
+        },
+        {
+          "name": "status_string",
+          "type": "enum",
+          "description": "Valor lógico restringido a: Registered, Payed, Canceled, Delivered, Devolved, Attended, Sended."
+        },
+        {
+          "name": "status",
+          "type": "bit(1)",
+          "description": "Dato status de tb_orders."
+        },
+        {
+          "name": "creation_date",
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
+        },
+        {
+          "name": "last_update",
+          "type": "datetime",
+          "description": "Marca de tiempo de última actualización."
+        }
+      ],
+      "sources": [
+        {
+          "path": "Practica04/backups/respaldo181126.sql",
+          "line": 247
+        }
+      ]
+    },
+    {
+      "id": "tbd_buyer_orders",
+      "label": "tbd_buyer_orders",
+      "tag": "Pedidos y cancelaciones",
+      "row": 2,
+      "col": 2,
+      "width": 323,
+      "attributes": [
+        {
+          "name": "ID",
+          "type": "int unsigned",
+          "key": "pk",
+          "description": "Clave primaria. Identificador asignado automáticamente por la base de datos."
+        },
+        {
+          "name": "seller_ID",
+          "type": "int unsigned",
+          "key": "fk",
+          "references": "tb_users.ID",
+          "description": "Referencia foránea a tb_users.ID."
+        },
+        {
+          "name": "subtotal",
+          "type": "decimal(12,2)",
+          "description": "Dato subtotal de tbd_buyer_orders."
+        },
+        {
+          "name": "shipping_cost",
+          "type": "decimal(12,2)",
+          "description": "Dato shipping cost de tbd_buyer_orders."
+        },
+        {
+          "name": "fulfillment_status",
+          "type": "enum",
+          "description": "Valor lógico restringido a: Pending, Accepted, Preparing, Sent, Delivered, Canceled, Returned."
+        },
+        {
+          "name": "status",
+          "type": "bit(1)",
+          "description": "Dato status de tbd_buyer_orders."
+        },
+        {
+          "name": "creation_date",
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
+        },
+        {
+          "name": "last_update",
+          "type": "datetime",
+          "description": "Marca de tiempo de última actualización automática."
+        }
+      ],
+      "sources": [
+        {
+          "path": "Practica04/backups/respaldo181126.sql",
+          "line": 1535
+        }
+      ]
+    },
+    {
+      "id": "tbd_cancellation_items",
+      "label": "tbd_cancellation_items",
+      "tag": "Pedidos y cancelaciones",
+      "row": 3,
+      "col": 2,
+      "width": 300,
+      "attributes": [
+        {
+          "name": "ID",
+          "type": "int unsigned",
+          "key": "pk",
+          "description": "Clave primaria. Identificador asignado automáticamente por la base de datos."
+        },
+        {
+          "name": "cancellation_ID",
+          "type": "int unsigned",
+          "key": [
+            "uk",
+            "fk"
+          ],
+          "references": "tb_order_cancellations.ID",
+          "description": "Referencia foránea a tb_order_cancellations.ID. Participa en una restricción única."
+        },
+        {
+          "name": "order_item_ID",
+          "type": "int unsigned",
+          "key": [
+            "uk",
+            "fk"
+          ],
+          "references": "tbd_order_items.ID",
+          "description": "Referencia foránea a tbd_order_items.ID. Participa en una restricción única."
+        },
+        {
+          "name": "quantity",
+          "type": "int unsigned",
+          "description": "Dato quantity de tbd_cancellation_items."
+        },
+        {
+          "name": "creation_date",
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
+        }
+      ],
+      "sources": [
+        {
+          "path": "Practica04/backups/respaldo181126.sql",
+          "line": 1623
+        }
+      ]
+    },
+    {
+      "id": "tbd_order_items",
+      "label": "tbd_order_items",
+      "tag": "Pedidos y cancelaciones",
+      "row": 4,
+      "col": 2,
+      "width": 299,
+      "attributes": [
+        {
+          "name": "ID",
+          "type": "int unsigned",
+          "key": "pk",
+          "description": "Clave primaria. Identificador asignado automáticamente por la base de datos."
+        },
+        {
+          "name": "buyer_order_ID",
+          "type": "int unsigned",
+          "key": "fk",
+          "references": "tbd_buyer_orders.ID",
+          "description": "Referencia foránea a tbd_buyer_orders.ID."
+        },
+        {
+          "name": "product_ID",
+          "type": "int unsigned",
+          "key": [
+            "fk",
+            "fk"
+          ],
+          "references": "tbd_products_users_providers.product_id",
+          "description": "Referencia foránea a tbd_products_users_providers.product_id. Referencia foránea a tbd_products_users_providers.product_id."
+        },
+        {
+          "name": "provider_ID",
+          "type": "int unsigned",
+          "key": "fk",
+          "references": "tbd_products_users_providers.user_id",
+          "description": "Referencia foránea a tbd_products_users_providers.user_id."
+        },
+        {
+          "name": "product_name",
+          "type": "varchar(255)",
+          "description": "Dato product name de tbd_order_items."
+        },
+        {
+          "name": "quantity",
+          "type": "int unsigned",
+          "description": "Dato quantity de tbd_order_items."
+        },
+        {
+          "name": "unit_price",
+          "type": "decimal(12,2)",
+          "description": "Dato unit price de tbd_order_items."
+        },
+        {
+          "name": "subtotal",
+          "type": "decimal(12,2)",
+          "description": "Campo generado por la expresión declarada en el DDL."
+        },
+        {
+          "name": "creation_date",
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
+        }
+      ],
+      "sources": [
+        {
+          "path": "Practica04/backups/respaldo181126.sql",
+          "line": 1797
+        }
+      ]
+    },
+    {
+      "id": "tb_payment_methods",
+      "label": "tb_payment_methods",
+      "tag": "Pagos",
+      "row": 0,
+      "col": 3,
+      "width": 288,
+      "attributes": [
+        {
+          "name": "ID",
+          "type": "int unsigned",
+          "key": "pk",
+          "description": "Clave primaria. Identificador asignado automáticamente por la base de datos."
+        },
+        {
+          "name": "name",
+          "type": "varchar(60)",
+          "key": "uk",
+          "description": "Participa en una restricción única."
+        },
+        {
+          "name": "description",
+          "type": "varchar(255)",
+          "description": "Dato description de tb_payment_methods."
+        },
+        {
+          "name": "status",
+          "type": "bit(1)",
+          "description": "Dato status de tb_payment_methods."
+        },
+        {
+          "name": "creation_date",
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
+        },
+        {
+          "name": "last_update",
+          "type": "datetime",
+          "description": "Marca de tiempo de última actualización automática."
+        }
+      ],
+      "sources": [
+        {
+          "path": "Practica04/backups/respaldo181126.sql",
+          "line": 337
+        }
+      ]
+    },
+    {
+      "id": "tb_payment_transaction",
+      "label": "tb_payment_transaction",
+      "tag": "Pagos",
+      "row": 1,
+      "col": 3,
+      "width": 353,
+      "attributes": [
+        {
+          "name": "ID",
+          "type": "int unsigned",
+          "key": "pk",
+          "description": "Clave primaria. Identificador asignado automáticamente por la base de datos."
+        },
+        {
+          "name": "payment_ID",
+          "type": "int unsigned",
+          "key": [
+            "fk",
+            "fk"
+          ],
+          "references": "tb_payments.ID",
+          "description": "Referencia foránea a tb_payments.ID. Referencia foránea a tb_refunds.payment_ID."
+        },
+        {
+          "name": "refund_ID",
+          "type": "int unsigned",
+          "key": "fk",
+          "references": "tb_refunds.ID",
+          "description": "Referencia foránea a tb_refunds.ID."
+        },
+        {
+          "name": "transaction_type",
+          "type": "enum",
+          "description": "Valor lógico restringido a: Authorization, Capture, Charge, Void, Refund, Chargeback, Adjustment."
+        },
+        {
+          "name": "transaction_status",
+          "type": "enum",
+          "description": "Valor lógico restringido a: Pending, Succeeded, Failed."
+        },
+        {
+          "name": "amount",
+          "type": "decimal(10,2)",
+          "description": "Dato amount de tb_payment_transaction."
+        },
+        {
+          "name": "currency",
+          "type": "char(3)",
+          "description": "Dato currency de tb_payment_transaction."
+        },
+        {
+          "name": "provider",
+          "type": "varchar(60)",
+          "key": [
+            "uk",
+            "uk"
+          ],
+          "description": "Participa en una restricción única."
+        },
+        {
+          "name": "provider_transaction_id",
+          "type": "varchar(150)",
+          "key": "uk",
+          "description": "Participa en una restricción única."
+        },
+        {
+          "name": "idempotency_key",
+          "type": "varchar(100)",
+          "key": "uk",
+          "description": "Participa en una restricción única."
+        },
+        {
+          "name": "response_code",
+          "type": "varchar(100)",
+          "description": "Dato response code de tb_payment_transaction."
+        },
+        {
+          "name": "response_message",
+          "type": "varchar(500)",
+          "description": "Dato response message de tb_payment_transaction."
+        },
+        {
+          "name": "request_date",
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
+        },
+        {
+          "name": "response_date",
+          "type": "datetime",
+          "description": "Marca de tiempo/fecha del evento indicado por el nombre del campo."
+        },
+        {
+          "name": "creation_date",
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
+        },
+        {
+          "name": "last_update",
+          "type": "datetime",
+          "description": "Marca de tiempo de última actualización automática."
+        }
+      ],
+      "sources": [
+        {
+          "path": "Practica04/backups/respaldo181126.sql",
+          "line": 420
+        }
+      ]
+    },
+    {
+      "id": "tb_payments",
+      "label": "tb_payments",
+      "tag": "Pagos",
+      "row": 2,
+      "col": 3,
+      "width": 323,
+      "attributes": [
+        {
+          "name": "ID",
+          "type": "int unsigned",
+          "key": "pk",
+          "description": "Clave primaria. Identificador asignado automáticamente por la base de datos."
+        },
+        {
+          "name": "order_ID",
+          "type": "int unsigned",
+          "key": "fk",
+          "references": "tb_orders.ID",
+          "description": "Referencia foránea a tb_orders.ID."
+        },
+        {
+          "name": "payment_method_ID",
+          "type": "int unsigned",
+          "key": "fk",
+          "references": "tb_payment_methods.ID",
+          "description": "Referencia foránea a tb_payment_methods.ID."
+        },
+        {
+          "name": "amount",
+          "type": "decimal(10,2)",
+          "description": "Dato amount de tb_payments."
+        },
+        {
+          "name": "currency",
+          "type": "char(3)",
+          "description": "Dato currency de tb_payments."
+        },
+        {
+          "name": "payment_status",
+          "type": "enum",
+          "description": "Valor lógico restringido a: Pending, Authorized, Paid, Failed, Refunded, PartiallyRefunded."
+        },
+        {
+          "name": "provider",
+          "type": "varchar(60)",
+          "key": "uk",
+          "description": "Participa en una restricción única."
+        },
+        {
+          "name": "provider_reference",
+          "type": "varchar(150)",
+          "key": "uk",
+          "description": "Participa en una restricción única."
+        },
+        {
+          "name": "creation_date",
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
+        },
+        {
+          "name": "paid_date",
+          "type": "datetime",
+          "description": "Marca de tiempo/fecha del evento indicado por el nombre del campo."
+        },
+        {
+          "name": "last_update",
+          "type": "datetime",
+          "description": "Marca de tiempo de última actualización automática."
+        }
+      ],
+      "sources": [
+        {
+          "path": "Practica04/backups/respaldo181126.sql",
+          "line": 521
+        }
+      ]
+    },
+    {
+      "id": "tbc_payment_methods_types",
+      "label": "tbc_payment_methods_types",
+      "tag": "Pagos",
+      "row": 3,
+      "col": 3,
+      "width": 288,
+      "attributes": [
+        {
+          "name": "ID",
+          "type": "int unsigned",
+          "key": "pk",
+          "description": "Clave primaria. Identificador asignado automáticamente por la base de datos."
+        },
+        {
+          "name": "code",
+          "type": "varchar(30)",
+          "key": "uk",
+          "description": "Participa en una restricción única."
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "description": "Dato description de tbc_payment_methods_types."
+        },
+        {
+          "name": "status",
+          "type": "bit(1)",
+          "description": "Dato status de tbc_payment_methods_types."
+        },
+        {
+          "name": "creation_date",
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
+        },
+        {
+          "name": "last_update",
+          "type": "datetime",
+          "description": "Marca de tiempo de última actualización automática."
+        }
+      ],
+      "sources": [
+        {
+          "path": "Practica04/backups/respaldo181126.sql",
+          "line": 1364
+        }
+      ]
+    },
+    {
+      "id": "tbd_user_payment_methods",
+      "label": "tbd_user_payment_methods",
+      "tag": "Pagos",
+      "row": 4,
+      "col": 3,
+      "width": 357,
+      "attributes": [
+        {
+          "name": "ID",
+          "type": "bigint unsigned",
+          "key": "pk",
+          "description": "Clave primaria. Identificador asignado automáticamente por la base de datos."
+        },
+        {
+          "name": "user_ID",
+          "type": "int unsigned",
+          "key": "fk",
+          "references": "tb_users.ID",
+          "description": "Referencia foránea a tb_users.ID."
+        },
+        {
+          "name": "payment_method_type_ID",
+          "type": "int unsigned",
+          "key": "fk",
+          "references": "tbc_payment_methods_types.ID",
+          "description": "Referencia foránea a tbc_payment_methods_types.ID."
+        },
+        {
+          "name": "provider",
+          "type": "varchar(60)",
+          "key": "uk",
+          "description": "Participa en una restricción única."
+        },
+        {
+          "name": "provider_method_ref",
+          "type": "varchar(255)",
+          "key": "uk",
+          "description": "Participa en una restricción única."
+        },
+        {
+          "name": "label",
+          "type": "varchar(100)",
+          "description": "Dato label de tbd_user_payment_methods."
+        },
+        {
+          "name": "last_four",
+          "type": "char(4)",
+          "description": "Dato last four de tbd_user_payment_methods."
+        },
+        {
+          "name": "is_default",
+          "type": "tinyint(1)",
+          "description": "Indicador lógico/booleano; valores sujetos al tipo y restricciones declaradas."
+        },
+        {
+          "name": "status",
+          "type": "bit(1)",
+          "description": "Dato status de tbd_user_payment_methods."
+        },
+        {
+          "name": "creation_date",
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
+        },
+        {
+          "name": "last_update",
+          "type": "datetime",
+          "description": "Marca de tiempo de última actualización automática."
+        }
+      ],
+      "sources": [
+        {
+          "path": "Practica04/backups/respaldo181126.sql",
+          "line": 2156
+        }
+      ]
+    },
+    {
+      "id": "tb_people",
+      "label": "tb_people",
+      "tag": "Personas y direcciones",
+      "row": 0,
+      "col": 4,
+      "width": 303,
+      "attributes": [
+        {
+          "name": "person_ID",
+          "type": "bigint unsigned",
+          "key": "pk",
+          "description": "Clave primaria. Identificador asignado automáticamente por la base de datos."
+        },
+        {
+          "name": "user_ID",
+          "type": "int unsigned",
+          "key": "fk",
+          "references": "tb_users.ID",
+          "description": "Referencia foránea a tb_users.ID."
+        },
+        {
+          "name": "title",
+          "type": "varchar(30)",
+          "description": "Dato title de tb_people."
+        },
+        {
+          "name": "given_names",
+          "type": "varchar(150)",
+          "description": "Dato given names de tb_people."
+        },
+        {
+          "name": "family_names",
+          "type": "varchar(150)",
+          "description": "Dato family names de tb_people."
+        },
+        {
+          "name": "birth_date",
+          "type": "date",
+          "description": "Marca de tiempo/fecha del evento indicado por el nombre del campo."
+        },
+        {
+          "name": "gender_ID",
+          "type": "enum",
+          "description": "Valor lógico restringido a: H, M, Prefiero no decirlo."
+        },
+        {
+          "name": "phone",
+          "type": "varchar(25)",
+          "description": "Dato phone de tb_people."
+        },
+        {
+          "name": "country_code",
+          "type": "char(2)",
+          "description": "Dato country code de tb_people."
+        },
+        {
+          "name": "status",
+          "type": "bit(1)",
+          "description": "Dato status de tb_people."
+        },
+        {
+          "name": "creation_date",
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
+        },
+        {
+          "name": "last_update",
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
+        }
+      ],
+      "sources": [
+        {
+          "path": "Practica04/backups/respaldo181126.sql",
+          "line": 614
+        }
+      ]
+    },
+    {
+      "id": "tb_user_addresses",
+      "label": "tb_user_addresses",
+      "tag": "Personas y direcciones",
+      "row": 1,
+      "col": 4,
+      "width": 351,
+      "attributes": [
+        {
+          "name": "ID",
+          "type": "bigint unsigned",
+          "key": "pk",
+          "description": "Clave primaria. Identificador asignado automáticamente por la base de datos."
+        },
+        {
+          "name": "user_ID",
+          "type": "int unsigned",
+          "key": "fk",
+          "references": "tb_users.ID",
+          "description": "Referencia foránea a tb_users.ID."
+        },
+        {
+          "name": "address_label",
+          "type": "varchar(100)",
+          "description": "Dato address label de tb_user_addresses."
+        },
+        {
+          "name": "recipient_name",
+          "type": "varchar(150)",
+          "description": "Dato recipient name de tb_user_addresses."
+        },
+        {
+          "name": "recipient_phone",
+          "type": "varchar(25)",
+          "description": "Dato recipient phone de tb_user_addresses."
+        },
+        {
+          "name": "delivery_instructions",
+          "type": "varchar(500)",
+          "description": "Dato delivery instructions de tb_user_addresses."
+        },
+        {
+          "name": "latitude",
+          "type": "decimal(10,7)",
+          "description": "Dato latitude de tb_user_addresses."
+        },
+        {
+          "name": "longitude",
+          "type": "decimal(10,7)",
+          "description": "Dato longitude de tb_user_addresses."
+        },
+        {
+          "name": "is_default",
+          "type": "tinyint(1)",
+          "description": "Indicador lógico/booleano; valores sujetos al tipo y restricciones declaradas."
+        },
+        {
+          "name": "status",
+          "type": "bit(1)",
+          "description": "Dato status de tb_user_addresses."
+        },
+        {
+          "name": "creation_date",
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
+        },
+        {
+          "name": "last_update",
+          "type": "datetime",
+          "description": "Marca de tiempo de última actualización automática."
+        }
+      ],
+      "sources": [
+        {
+          "path": "Practica04/backups/respaldo181126.sql",
+          "line": 1098
+        }
+      ]
+    },
+    {
+      "id": "tb_users",
+      "label": "tb_users",
+      "tag": "Personas y direcciones",
+      "row": 2,
+      "col": 4,
+      "width": 288,
+      "attributes": [
+        {
+          "name": "ID",
+          "type": "int unsigned",
+          "key": "pk",
+          "description": "Clave primaria. Identificador asignado automáticamente por la base de datos."
+        },
+        {
+          "name": "email",
+          "type": "varchar(80)",
+          "key": "uk",
+          "description": "Participa en una restricción única."
+        },
+        {
+          "name": "nickname",
+          "type": "varchar(100)",
+          "key": "uk",
+          "description": "Participa en una restricción única."
+        },
+        {
+          "name": "password",
+          "type": "varchar(255)",
+          "description": "Dato password de tb_users."
+        },
+        {
+          "name": "creation_date",
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
+        },
+        {
+          "name": "last_update",
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
+        },
+        {
+          "name": "last_login",
+          "type": "datetime",
+          "description": "Dato last login de tb_users."
+        },
+        {
+          "name": "status",
+          "type": "bit(1)",
+          "description": "Dato status de tb_users."
+        }
+      ],
+      "sources": [
+        {
+          "path": "Practica04/backups/respaldo181126.sql",
+          "line": 1191
+        }
+      ]
+    },
+    {
+      "id": "tbd_address_components",
+      "label": "tbd_address_components",
+      "tag": "Personas y direcciones",
+      "row": 3,
+      "col": 4,
+      "width": 309,
+      "attributes": [
+        {
+          "name": "ID",
+          "type": "bigint unsigned",
+          "key": [
+            "uk",
+            "pk"
+          ],
+          "description": "Clave primaria. Participa en una restricción única. Identificador asignado automáticamente por la base de datos."
+        },
+        {
+          "name": "address_ID",
+          "type": "bigint unsigned",
+          "key": [
+            "uk",
+            "fk",
+            "fk"
+          ],
+          "references": "tb_user_addresses.ID",
+          "description": "Referencia foránea a tb_user_addresses.ID. Referencia foránea a tbd_address_components.address_ID. Participa en una restricción única."
+        },
+        {
+          "name": "value",
+          "type": "varchar(255)",
+          "description": "Dato value de tbd_address_components."
+        },
+        {
+          "name": "component_type",
+          "type": "varchar(50)",
+          "description": "Dato component type de tbd_address_components."
+        },
+        {
+          "name": "status",
+          "type": "bit(1)",
+          "description": "Dato status de tbd_address_components."
+        },
+        {
+          "name": "address_sup_ID",
+          "type": "bigint unsigned",
+          "key": "fk",
+          "references": "tbd_address_components.ID",
+          "description": "Referencia foránea a tbd_address_components.ID."
+        },
+        {
+          "name": "creation_date",
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
+        },
+        {
+          "name": "last_update",
+          "type": "datetime",
+          "description": "Marca de tiempo de última actualización automática."
+        }
+      ],
+      "sources": [
+        {
+          "path": "Practica04/backups/respaldo181126.sql",
+          "line": 1447
+        }
+      ]
+    },
+    {
+      "id": "tb_products",
+      "label": "tb_products",
+      "tag": "Catálogo",
+      "row": 0,
+      "col": 5,
+      "width": 293,
+      "attributes": [
+        {
+          "name": "ID",
+          "type": "int unsigned",
+          "key": "pk",
+          "description": "Clave primaria. Identificador asignado automáticamente por la base de datos."
+        },
+        {
+          "name": "SKU",
+          "type": "varchar(50)",
+          "key": "uk",
+          "description": "Participa en una restricción única."
+        },
+        {
+          "name": "name",
+          "type": "varchar(250)",
+          "description": "Dato name de tb_products."
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "description": "Dato description de tb_products."
+        },
+        {
+          "name": "current_price",
+          "type": "decimal(10,2)",
+          "description": "Dato current price de tb_products."
+        },
+        {
+          "name": "current_stock",
+          "type": "int unsigned",
+          "description": "Dato current stock de tb_products."
+        },
+        {
+          "name": "status",
+          "type": "bit(1)",
+          "description": "Dato status de tb_products."
+        },
+        {
+          "name": "creation_date",
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
+        },
+        {
+          "name": "last_update",
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
+        }
+      ],
+      "sources": [
+        {
+          "path": "Practica04/backups/respaldo181126.sql",
+          "line": 705
+        }
+      ]
+    },
+    {
+      "id": "tbc_categories",
+      "label": "tbc_categories",
+      "tag": "Catálogo",
+      "row": 1,
+      "col": 5,
+      "width": 300,
+      "attributes": [
+        {
+          "name": "ID",
+          "type": "int unsigned",
+          "key": "pk",
+          "description": "Clave primaria. Identificador asignado automáticamente por la base de datos."
+        },
+        {
+          "name": "name",
+          "type": "varchar(120)",
+          "key": "uk",
+          "description": "Participa en una restricción única."
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "description": "Dato description de tbc_categories."
+        },
+        {
+          "name": "sup_id_category",
+          "type": "int unsigned",
+          "key": "fk",
+          "references": "tbc_categories.ID",
+          "description": "Referencia foránea a tbc_categories.ID."
+        },
+        {
+          "name": "status",
+          "type": "bit(1)",
+          "description": "Dato status de tbc_categories."
+        },
+        {
+          "name": "creation_date",
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
+        },
+        {
+          "name": "last_update",
+          "type": "datetime",
+          "description": "Marca de tiempo de última actualización automática."
+        }
+      ],
+      "sources": [
+        {
+          "path": "Practica04/backups/respaldo181126.sql",
+          "line": 1278
+        }
+      ]
+    },
+    {
+      "id": "tbd_products_categories",
+      "label": "tbd_products_categories",
+      "tag": "Catálogo",
+      "row": 2,
+      "col": 5,
+      "width": 288,
+      "attributes": [
+        {
+          "name": "category_ID",
+          "type": "int unsigned",
+          "key": [
+            "fk",
+            "pk"
+          ],
+          "references": "tbc_categories.ID",
+          "description": "Clave primaria. Referencia foránea a tbc_categories.ID."
+        },
+        {
+          "name": "product_ID",
+          "type": "int unsigned",
+          "key": [
+            "fk",
+            "pk"
+          ],
+          "references": "tb_products.ID",
+          "description": "Clave primaria. Referencia foránea a tb_products.ID."
+        },
+        {
+          "name": "status",
+          "type": "bit(1)",
+          "description": "Dato status de tbd_products_categories."
+        },
+        {
+          "name": "creation_date",
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
+        },
+        {
+          "name": "last_update",
+          "type": "datetime",
+          "description": "Marca de tiempo de última actualización automática."
+        }
+      ],
+      "sources": [
+        {
+          "path": "Practica04/backups/respaldo181126.sql",
+          "line": 1891
+        }
+      ]
+    },
+    {
+      "id": "tbd_products_users_providers",
+      "label": "tbd_products_users_providers",
+      "tag": "Catálogo",
+      "row": 3,
+      "col": 5,
+      "width": 294,
+      "attributes": [
+        {
+          "name": "user_id",
+          "type": "int unsigned",
+          "key": [
+            "fk",
+            "pk"
+          ],
+          "references": "tb_users.ID",
+          "description": "Clave primaria. Referencia foránea a tb_users.ID."
+        },
+        {
+          "name": "product_id",
+          "type": "int unsigned",
+          "key": [
+            "uk",
+            "fk",
+            "pk"
+          ],
+          "references": "tb_products.ID",
+          "description": "Clave primaria. Referencia foránea a tb_products.ID. Participa en una restricción única."
+        },
+        {
+          "name": "type_ownership",
+          "type": "enum",
+          "description": "Valor lógico restringido a: Owner, Reseller, Distributor."
+        },
+        {
+          "name": "status",
+          "type": "bit(1)",
+          "description": "Dato status de tbd_products_users_providers."
+        },
+        {
+          "name": "avalaible_date",
+          "type": "datetime",
+          "description": "Marca de tiempo/fecha del evento indicado por el nombre del campo."
+        },
+        {
+          "name": "creation_date",
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
+        },
+        {
+          "name": "last_update",
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
+        }
+      ],
+      "sources": [
+        {
+          "path": "Practica04/backups/respaldo181126.sql",
+          "line": 1976
+        }
+      ]
+    },
+    {
+      "id": "tb_refunds",
+      "label": "tb_refunds",
+      "tag": "Envíos y devoluciones",
+      "row": 0,
+      "col": 6,
+      "width": 335,
+      "attributes": [
+        {
+          "name": "ID",
+          "type": "int unsigned",
+          "key": [
+            "uk",
+            "pk"
+          ],
+          "description": "Clave primaria. Participa en una restricción única. Identificador asignado automáticamente por la base de datos."
+        },
+        {
+          "name": "payment_ID",
+          "type": "int unsigned",
+          "key": [
+            "uk",
+            "fk"
+          ],
+          "references": "tb_payments.ID",
+          "description": "Referencia foránea a tb_payments.ID. Participa en una restricción única."
+        },
+        {
+          "name": "cancellation_ID",
+          "type": "int unsigned",
+          "key": "fk",
+          "references": "tb_order_cancellations.ID",
+          "description": "Referencia foránea a tb_order_cancellations.ID."
+        },
+        {
+          "name": "return_ID",
+          "type": "int unsigned",
+          "key": "fk",
+          "references": "tb_returns.ID",
+          "description": "Referencia foránea a tb_returns.ID."
+        },
+        {
+          "name": "reason",
+          "type": "enum",
+          "description": "Valor lógico restringido a: Cancellation, Return, Adjustment, Goodwill."
+        },
+        {
+          "name": "amount",
+          "type": "decimal(10,2)",
+          "description": "Dato amount de tb_refunds."
+        },
+        {
+          "name": "currency",
+          "type": "char(3)",
+          "description": "Dato currency de tb_refunds."
+        },
+        {
+          "name": "refund_status",
+          "type": "enum",
+          "description": "Valor lógico restringido a: Pending, Submitted, Succeeded, Failed, Canceled."
+        },
+        {
+          "name": "provider",
+          "type": "varchar(60)",
+          "key": "uk",
+          "description": "Participa en una restricción única."
+        },
+        {
+          "name": "provider_reference",
+          "type": "varchar(150)",
+          "key": "uk",
+          "description": "Participa en una restricción única."
+        },
+        {
+          "name": "requested_by_user_ID",
+          "type": "int unsigned",
+          "key": "fk",
+          "references": "tb_users.ID",
+          "description": "Referencia foránea a tb_users.ID."
+        },
+        {
+          "name": "reason_detail",
+          "type": "varchar(1000)",
+          "description": "Dato reason detail de tb_refunds."
+        },
+        {
+          "name": "requested_at",
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
+        },
+        {
+          "name": "processed_at",
+          "type": "datetime",
+          "description": "Marca de tiempo/fecha del evento indicado por el nombre del campo."
+        },
+        {
+          "name": "creation_date",
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
+        },
+        {
+          "name": "last_update",
+          "type": "datetime",
+          "description": "Marca de tiempo de última actualización automática."
+        }
+      ],
+      "sources": [
+        {
+          "path": "Practica04/backups/respaldo181126.sql",
+          "line": 794
+        }
+      ]
+    },
+    {
+      "id": "tb_returns",
+      "label": "tb_returns",
+      "tag": "Envíos y devoluciones",
+      "row": 1,
+      "col": 6,
+      "width": 347,
+      "attributes": [
+        {
+          "name": "ID",
+          "type": "int unsigned",
+          "key": "pk",
+          "description": "Clave primaria. Identificador asignado automáticamente por la base de datos."
+        },
+        {
+          "name": "buyer_order_ID",
+          "type": "int unsigned",
+          "key": "fk",
+          "references": "tbd_buyer_orders.ID",
+          "description": "Referencia foránea a tbd_buyer_orders.ID."
+        },
+        {
+          "name": "requested_by_user_ID",
+          "type": "int unsigned",
+          "key": "fk",
+          "references": "tb_users.ID",
+          "description": "Referencia foránea a tb_users.ID."
+        },
+        {
+          "name": "reason_code",
+          "type": "varchar(60)",
+          "description": "Dato reason code de tb_returns."
+        },
+        {
+          "name": "reason_detail",
+          "type": "varchar(1000)",
+          "description": "Dato reason detail de tb_returns."
+        },
+        {
+          "name": "return_status",
+          "type": "enum",
+          "description": "Valor lógico restringido a: Requested, Authorized, Rejected, LabelCreated, InTransit, Received, Inspected, Approved, PartiallyApproved, Refunded, Closed."
+        },
+        {
+          "name": "return_carrier",
+          "type": "varchar(100)",
+          "description": "Dato return carrier de tb_returns."
+        },
+        {
+          "name": "return_tracking_number",
+          "type": "varchar(150)",
+          "description": "Dato return tracking number de tb_returns."
+        },
+        {
+          "name": "requested_at",
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
+        },
+        {
+          "name": "authorized_at",
+          "type": "datetime",
+          "description": "Marca de tiempo/fecha del evento indicado por el nombre del campo."
+        },
+        {
+          "name": "received_at",
+          "type": "datetime",
+          "description": "Marca de tiempo/fecha del evento indicado por el nombre del campo."
+        },
+        {
+          "name": "closed_at",
+          "type": "datetime",
+          "description": "Marca de tiempo/fecha del evento indicado por el nombre del campo."
+        },
+        {
+          "name": "internal_notes",
+          "type": "varchar(1000)",
+          "description": "Dato internal notes de tb_returns."
+        },
+        {
+          "name": "creation_date",
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
+        },
+        {
+          "name": "last_update",
+          "type": "datetime",
+          "description": "Marca de tiempo de última actualización automática."
+        }
+      ],
+      "sources": [
+        {
+          "path": "Practica04/backups/respaldo181126.sql",
+          "line": 898
+        }
+      ]
+    },
+    {
+      "id": "tb_shipments",
+      "label": "tb_shipments",
+      "tag": "Envíos y devoluciones",
+      "row": 2,
+      "col": 6,
+      "width": 351,
+      "attributes": [
+        {
+          "name": "ID",
+          "type": "int unsigned",
+          "key": "pk",
+          "description": "Clave primaria. Identificador asignado automáticamente por la base de datos."
+        },
+        {
+          "name": "buyer_order_ID",
+          "type": "int unsigned",
+          "key": "fk",
+          "references": "tbd_buyer_orders.ID",
+          "description": "Referencia foránea a tbd_buyer_orders.ID."
+        },
+        {
+          "name": "address_ID",
+          "type": "bigint unsigned",
+          "key": "fk",
+          "references": "tb_user_addresses.ID",
+          "description": "Referencia foránea a tb_user_addresses.ID."
+        },
+        {
+          "name": "recipient_name",
+          "type": "varchar(150)",
+          "description": "Dato recipient name de tb_shipments."
+        },
+        {
+          "name": "recipient_phone",
+          "type": "varchar(25)",
+          "description": "Dato recipient phone de tb_shipments."
+        },
+        {
+          "name": "address_line_1",
+          "type": "varchar(255)",
+          "description": "Dato address line 1 de tb_shipments."
+        },
+        {
+          "name": "address_line_2",
+          "type": "varchar(255)",
+          "description": "Dato address line 2 de tb_shipments."
+        },
+        {
+          "name": "city",
+          "type": "varchar(120)",
+          "description": "Dato city de tb_shipments."
+        },
+        {
+          "name": "state_region",
+          "type": "varchar(120)",
+          "description": "Dato state region de tb_shipments."
+        },
+        {
+          "name": "postal_code",
+          "type": "varchar(20)",
+          "description": "Dato postal code de tb_shipments."
+        },
+        {
+          "name": "country_code",
+          "type": "char(2)",
+          "description": "Dato country code de tb_shipments."
+        },
+        {
+          "name": "carrier",
+          "type": "varchar(100)",
+          "description": "Dato carrier de tb_shipments."
+        },
+        {
+          "name": "service_level",
+          "type": "varchar(100)",
+          "description": "Dato service level de tb_shipments."
+        },
+        {
+          "name": "tracking_number",
+          "type": "varchar(150)",
+          "description": "Dato tracking number de tb_shipments."
+        },
+        {
+          "name": "tracking_url",
+          "type": "varchar(500)",
+          "description": "Dato tracking url de tb_shipments."
+        },
+        {
+          "name": "shipment_status",
+          "type": "enum",
+          "description": "Valor lógico restringido a: Pending, LabelCreated, ReadyToShip, InTransit, OutForDelivery, Delivered, DeliveryFailed, Lost, Returned."
+        },
+        {
+          "name": "shipping_cost",
+          "type": "decimal(12,2)",
+          "description": "Dato shipping cost de tb_shipments."
+        },
+        {
+          "name": "shipped_at",
+          "type": "datetime",
+          "description": "Marca de tiempo/fecha del evento indicado por el nombre del campo."
+        },
+        {
+          "name": "estimated_delivery_at",
+          "type": "datetime",
+          "description": "Marca de tiempo/fecha del evento indicado por el nombre del campo."
+        },
+        {
+          "name": "delivered_at",
+          "type": "datetime",
+          "description": "Marca de tiempo/fecha del evento indicado por el nombre del campo."
+        },
+        {
+          "name": "creation_date",
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
+        },
+        {
+          "name": "last_update",
+          "type": "datetime",
+          "description": "Marca de tiempo de última actualización automática."
+        }
+      ],
+      "sources": [
+        {
+          "path": "Practica04/backups/respaldo181126.sql",
+          "line": 994
+        }
+      ]
+    },
+    {
+      "id": "tbd_return_items",
+      "label": "tbd_return_items",
+      "tag": "Envíos y devoluciones",
+      "row": 3,
+      "col": 6,
+      "width": 347,
+      "attributes": [
+        {
+          "name": "ID",
+          "type": "int unsigned",
+          "key": "pk",
+          "description": "Clave primaria. Identificador asignado automáticamente por la base de datos."
+        },
+        {
+          "name": "return_ID",
+          "type": "int unsigned",
+          "key": [
+            "uk",
+            "fk"
+          ],
+          "references": "tb_returns.ID",
+          "description": "Referencia foránea a tb_returns.ID. Participa en una restricción única."
+        },
+        {
+          "name": "order_item_ID",
+          "type": "int unsigned",
+          "key": [
+            "uk",
+            "fk"
+          ],
+          "references": "tbd_order_items.ID",
+          "description": "Referencia foránea a tbd_order_items.ID. Participa en una restricción única."
+        },
+        {
+          "name": "quantity",
+          "type": "int unsigned",
+          "description": "Dato quantity de tbd_return_items."
+        },
+        {
+          "name": "item_condition",
+          "type": "enum",
+          "description": "Valor lógico restringido a: Unopened, Unused, Used, Damaged, Defective, Other."
+        },
+        {
+          "name": "disposition",
+          "type": "enum",
+          "description": "Valor lógico restringido a: Pending, Restock, Repair, Dispose, SupplierReturn."
+        },
+        {
+          "name": "approved_refund_amount",
+          "type": "decimal(12,2)",
+          "description": "Dato approved refund amount de tbd_return_items."
+        },
+        {
+          "name": "item_status",
+          "type": "enum",
+          "description": "Valor lógico restringido a: Requested, Approved, Rejected, Received, Refunded."
+        },
+        {
+          "name": "creation_date",
+          "type": "datetime",
+          "description": "Marca de tiempo inicializada automáticamente al crear el registro."
+        },
+        {
+          "name": "last_update",
+          "type": "datetime",
+          "description": "Marca de tiempo de última actualización automática."
+        }
+      ],
+      "sources": [
+        {
+          "path": "Practica04/backups/respaldo181126.sql",
+          "line": 2064
+        }
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "id": "rel_1",
+      "from": "tb_carts",
+      "to": "tb_users",
+      "fromCardinality": "many",
+      "toCardinality": "one",
+      "fromOptional": true,
+      "toOptional": false,
+      "identifying": false
+    },
+    {
+      "id": "rel_2",
+      "from": "tb_order_cancellations",
+      "to": "tbd_buyer_orders",
+      "fromCardinality": "many",
+      "toCardinality": "one",
+      "fromOptional": true,
+      "toOptional": true,
+      "identifying": false
+    },
+    {
+      "id": "rel_3",
+      "from": "tb_order_cancellations",
+      "to": "tb_orders",
+      "fromCardinality": "many",
+      "toCardinality": "one",
+      "fromOptional": true,
+      "toOptional": true,
+      "identifying": false
+    },
+    {
+      "id": "rel_4",
+      "from": "tb_order_cancellations",
+      "to": "tb_users",
+      "fromCardinality": "many",
+      "toCardinality": "one",
+      "fromOptional": true,
+      "toOptional": true,
+      "identifying": false
+    },
+    {
+      "id": "rel_5",
+      "from": "tb_orders",
+      "to": "tb_carts",
+      "fromCardinality": "many",
+      "toCardinality": "one",
+      "fromOptional": true,
+      "toOptional": false,
+      "identifying": false
+    },
+    {
+      "id": "rel_6",
+      "from": "tb_orders",
+      "to": "tb_users",
+      "fromCardinality": "many",
+      "toCardinality": "one",
+      "fromOptional": true,
+      "toOptional": false,
+      "identifying": false
+    },
+    {
+      "id": "rel_7",
+      "from": "tb_payment_transaction",
+      "to": "tb_payments",
+      "fromCardinality": "many",
+      "toCardinality": "one",
+      "fromOptional": true,
+      "toOptional": false,
+      "identifying": false
+    },
+    {
+      "id": "rel_8",
+      "from": "tb_payment_transaction",
+      "to": "tb_refunds",
+      "fromCardinality": "many",
+      "toCardinality": "one",
+      "fromOptional": true,
+      "toOptional": true,
+      "identifying": false
+    },
+    {
+      "id": "rel_9",
+      "from": "tb_payments",
+      "to": "tb_payment_methods",
+      "fromCardinality": "many",
+      "toCardinality": "one",
+      "fromOptional": true,
+      "toOptional": false,
+      "identifying": false
+    },
+    {
+      "id": "rel_10",
+      "from": "tb_payments",
+      "to": "tb_orders",
+      "fromCardinality": "many",
+      "toCardinality": "one",
+      "fromOptional": true,
+      "toOptional": false,
+      "identifying": false
+    },
+    {
+      "id": "rel_11",
+      "from": "tb_people",
+      "to": "tb_users",
+      "fromCardinality": "many",
+      "toCardinality": "one",
+      "fromOptional": true,
+      "toOptional": false,
+      "identifying": false
+    },
+    {
+      "id": "rel_12",
+      "from": "tb_refunds",
+      "to": "tb_order_cancellations",
+      "fromCardinality": "many",
+      "toCardinality": "one",
+      "fromOptional": true,
+      "toOptional": true,
+      "identifying": false
+    },
+    {
+      "id": "rel_13",
+      "from": "tb_refunds",
+      "to": "tb_payments",
+      "fromCardinality": "many",
+      "toCardinality": "one",
+      "fromOptional": true,
+      "toOptional": false,
+      "identifying": false
+    },
+    {
+      "id": "rel_14",
+      "from": "tb_refunds",
+      "to": "tb_users",
+      "fromCardinality": "many",
+      "toCardinality": "one",
+      "fromOptional": true,
+      "toOptional": true,
+      "identifying": false
+    },
+    {
+      "id": "rel_15",
+      "from": "tb_refunds",
+      "to": "tb_returns",
+      "fromCardinality": "many",
+      "toCardinality": "one",
+      "fromOptional": true,
+      "toOptional": true,
+      "identifying": false
+    },
+    {
+      "id": "rel_16",
+      "from": "tb_returns",
+      "to": "tbd_buyer_orders",
+      "fromCardinality": "many",
+      "toCardinality": "one",
+      "fromOptional": true,
+      "toOptional": false,
+      "identifying": false
+    },
+    {
+      "id": "rel_17",
+      "from": "tb_returns",
+      "to": "tb_users",
+      "fromCardinality": "many",
+      "toCardinality": "one",
+      "fromOptional": true,
+      "toOptional": true,
+      "identifying": false
+    },
+    {
+      "id": "rel_18",
+      "from": "tb_shipments",
+      "to": "tb_user_addresses",
+      "fromCardinality": "many",
+      "toCardinality": "one",
+      "fromOptional": true,
+      "toOptional": true,
+      "identifying": false
+    },
+    {
+      "id": "rel_19",
+      "from": "tb_shipments",
+      "to": "tbd_buyer_orders",
+      "fromCardinality": "many",
+      "toCardinality": "one",
+      "fromOptional": true,
+      "toOptional": false,
+      "identifying": false
+    },
+    {
+      "id": "rel_20",
+      "from": "tb_user_addresses",
+      "to": "tb_users",
+      "fromCardinality": "many",
+      "toCardinality": "one",
+      "fromOptional": true,
+      "toOptional": false,
+      "identifying": false
+    },
+    {
+      "id": "rel_22",
+      "from": "tbd_address_components",
+      "to": "tb_user_addresses",
+      "fromCardinality": "many",
+      "toCardinality": "one",
+      "fromOptional": true,
+      "toOptional": false,
+      "identifying": false
+    },
+    {
+      "id": "rel_24",
+      "from": "tbd_buyer_orders",
+      "to": "tb_users",
+      "fromCardinality": "many",
+      "toCardinality": "one",
+      "fromOptional": true,
+      "toOptional": false,
+      "identifying": false
+    },
+    {
+      "id": "rel_25",
+      "from": "tbd_cancellation_items",
+      "to": "tb_order_cancellations",
+      "fromCardinality": "many",
+      "toCardinality": "one",
+      "fromOptional": true,
+      "toOptional": false,
+      "identifying": false
+    },
+    {
+      "id": "rel_26",
+      "from": "tbd_cancellation_items",
+      "to": "tbd_order_items",
+      "fromCardinality": "many",
+      "toCardinality": "one",
+      "fromOptional": true,
+      "toOptional": false,
+      "identifying": false
+    },
+    {
+      "id": "rel_27",
+      "from": "tbd_cart_items",
+      "to": "tbd_products_users_providers",
+      "fromCardinality": "many",
+      "toCardinality": "one",
+      "fromOptional": true,
+      "toOptional": false,
+      "identifying": true
+    },
+    {
+      "id": "rel_28",
+      "from": "tbd_cart_items",
+      "to": "tb_carts",
+      "fromCardinality": "many",
+      "toCardinality": "one",
+      "fromOptional": true,
+      "toOptional": false,
+      "identifying": true
+    },
+    {
+      "id": "rel_29",
+      "from": "tbd_cart_items",
+      "to": "tbd_products_users_providers",
+      "fromCardinality": "many",
+      "toCardinality": "one",
+      "fromOptional": true,
+      "toOptional": false,
+      "identifying": true
+    },
+    {
+      "id": "rel_30",
+      "from": "tbd_order_items",
+      "to": "tbd_buyer_orders",
+      "fromCardinality": "many",
+      "toCardinality": "one",
+      "fromOptional": true,
+      "toOptional": false,
+      "identifying": false
+    },
+    {
+      "id": "rel_31",
+      "from": "tbd_order_items",
+      "to": "tbd_products_users_providers",
+      "fromCardinality": "many",
+      "toCardinality": "one",
+      "fromOptional": true,
+      "toOptional": false,
+      "identifying": false
+    },
+    {
+      "id": "rel_32",
+      "from": "tbd_order_items",
+      "to": "tbd_products_users_providers",
+      "fromCardinality": "many",
+      "toCardinality": "one",
+      "fromOptional": true,
+      "toOptional": false,
+      "identifying": false
+    },
+    {
+      "id": "rel_33",
+      "from": "tbd_products_categories",
+      "to": "tbc_categories",
+      "fromCardinality": "many",
+      "toCardinality": "one",
+      "fromOptional": true,
+      "toOptional": false,
+      "identifying": true
+    },
+    {
+      "id": "rel_34",
+      "from": "tbd_products_categories",
+      "to": "tb_products",
+      "fromCardinality": "many",
+      "toCardinality": "one",
+      "fromOptional": true,
+      "toOptional": false,
+      "identifying": true
+    },
+    {
+      "id": "rel_35",
+      "from": "tbd_products_users_providers",
+      "to": "tb_products",
+      "fromCardinality": "many",
+      "toCardinality": "one",
+      "fromOptional": true,
+      "toOptional": false,
+      "identifying": true
+    },
+    {
+      "id": "rel_36",
+      "from": "tbd_products_users_providers",
+      "to": "tb_users",
+      "fromCardinality": "many",
+      "toCardinality": "one",
+      "fromOptional": true,
+      "toOptional": false,
+      "identifying": true
+    },
+    {
+      "id": "rel_37",
+      "from": "tbd_return_items",
+      "to": "tbd_order_items",
+      "fromCardinality": "many",
+      "toCardinality": "one",
+      "fromOptional": true,
+      "toOptional": false,
+      "identifying": false
+    },
+    {
+      "id": "rel_38",
+      "from": "tbd_return_items",
+      "to": "tb_returns",
+      "fromCardinality": "many",
+      "toCardinality": "one",
+      "fromOptional": true,
+      "toOptional": false,
+      "identifying": false
+    },
+    {
+      "id": "rel_39",
+      "from": "tbd_user_payment_methods",
+      "to": "tb_users",
+      "fromCardinality": "many",
+      "toCardinality": "one",
+      "fromOptional": true,
+      "toOptional": false,
+      "identifying": false
+    },
+    {
+      "id": "rel_40",
+      "from": "tbd_user_payment_methods",
+      "to": "tbc_payment_methods_types",
+      "fromCardinality": "many",
+      "toCardinality": "one",
+      "fromOptional": true,
+      "toOptional": false,
+      "identifying": false
+    },
+    {
+      "id": "rel_41",
+      "from": "tbd_users_wishlist_products",
+      "to": "tb_products",
+      "fromCardinality": "many",
+      "toCardinality": "one",
+      "fromOptional": true,
+      "toOptional": false,
+      "identifying": true
+    },
+    {
+      "id": "rel_42",
+      "from": "tbd_users_wishlist_products",
+      "to": "tb_users",
+      "fromCardinality": "many",
+      "toCardinality": "one",
+      "fromOptional": true,
+      "toOptional": false,
+      "identifying": true
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Lectura de claves y cardinalidad",
+      "items": [
+        "PK = clave primaria; FK = clave foránea; UK = restricción única. Una tabla hija con muchos registros puede apuntar a una tabla padre.",
+        "La opcionalidad de relación se infiere de la nulabilidad de la FK. Las reglas ON DELETE / ON UPDATE y detalles completos están en el diccionario interactivo."
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Alcance de este MERE",
+      "items": [
+        "Muestra todas las columnas físicas, con nombre, tipo SQL y papel de clave.",
+        "El panel de entidad enlaza al diccionario con el total exacto de registros."
+      ]
+    }
+  ]
+}
