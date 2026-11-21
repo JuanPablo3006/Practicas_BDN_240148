@@ -1,4 +1,4 @@
-# Práctica 04 · Base de datos `db_test`
+﻿# Práctica 04 · Base de datos `db_test`
 
 ## Documentación interactiva
 
@@ -32,7 +32,7 @@ Las consultas de verificación describen cinco flujos de negocio:
 4. **Pago en efectivo y recolección:** pedido pagado en efectivo y entregado mediante modalidad *Pickup Point*.
 5. **Falta de inventario y cupón:** pago fallido por falta de stock, cancelación del pedido, liberación/reasignación del cupón y verificación de que el inventario no se consumió.
 
-Las consultas se encuentran en [`queries/consultas_de_verificacion.sql`](queries/consultas_de_verificacion.sql).
+Las consultas de verificación se encuentran en [`queries/consultas_de_verificacion.sql`](queries/consultas_de_verificacion.sql). Para consultar los eventos auditados de cada flujo desde `tb_logs`, [`queries/vistas_casos_practica04.sql`](queries/vistas_casos_practica04.sql) crea las vistas `vw_practica04_caso_1` a `vw_practica04_caso_5`; [`queries/consulta_5_casos.sql`](queries/consulta_5_casos.sql) contiene una consulta por vista para abrir los cinco resultados en MySQL Workbench.
 
 ## Estructura
 
@@ -43,3 +43,4 @@ Las consultas se encuentran en [`queries/consultas_de_verificacion.sql`](queries
 - `.archify/erd-db-test-practica04-20261119/`: candidato ERD y generador de la documentación.
 - `docs/index.html`: diccionario de datos y documentación de objetos SQL.
 - `docs/mere.html`: MERE navegable con enlaces al diccionario.
+
